@@ -397,6 +397,11 @@
     line-height: 1.4;
   }
   .chart-note[hidden] { display: none !important; }
+  .gas-note {
+    margin: 2px 0 0;
+    font-size: 18px;
+    line-height: 1.4;
+  }
 
   @media (max-width: 390px) {
     h1 { font-size: 30px; }
@@ -442,6 +447,12 @@
           <input type="range" id="fuel-max" min="750" max="3000" step="50" value="3000" aria-valuetext="$3,000" aria-label="Fuel per year up to $3,000">
           <span class="slider-value" id="fuel-max-value">$3,000</span>
         </label>
+        <label class="slider">
+          <span class="slider-top">Gas price</span>
+          <input type="range" id="gas-price" min="2" max="6" step="0.01" value="4.13" aria-valuetext="$4.13 a gallon" aria-label="Gas price $4.13 a gallon">
+          <span class="slider-value" id="gas-price-value">$4.13 a gallon</span>
+        </label>
+        <p class="gas-note" id="gas-note">This is the Kansas City price the totals started from. Electric cars do not use gas, so their cost stays the same.</p>
       </div>
     </div>
     <p class="count" id="count"></p>
@@ -461,7 +472,7 @@
     <section class="how" id="how">
       <h2>How we figured this</h2>
       <p>Each year is 14,959 miles. That is 11,071 miles of ordinary driving, the recent U.S. average, plus four trips from Kansas City to Madison, Wisconsin and back. Each trip is 486 miles one way, so the four round trips are 3,888 highway miles.</p>
-      <p>Gas is $4.13 a gallon, a Kansas City price for regular. Ordinary miles use the combined miles per gallon. The Madison trips use the highway miles per gallon.</p>
+      <p>$4.13 a gallon is the starting Kansas City price for regular. The slider above changes it. Ordinary miles use the combined miles per gallon. The Madison trips use the highway miles per gallon.</p>
       <p>Charging at home is 15.7 cents per kilowatt-hour. Charging on the Madison trips is about 34 cents per kilowatt-hour in a Tesla, and 48 cents in a Kia electric SUV.</p>
       <p>Insurance is $1,812 a year for every car. It is included in the 7-year total, but it does not change which car is cheaper.</p>
       <p>There is no sales tax, no Missouri personal property tax, and no charger. The purchase is cash, with no loan.</p>
@@ -1340,9 +1351,54 @@
   var legendPiece = "";
   var picked = null;
   var slidersReady = false;
+  var BASE_GAS = 4.13;
+  var lastGasCents = 413;
 
+  function gasCents() {
+    var el = document.getElementById("gas-price");
+    var raw = el ? Number(el.value) : BASE_GAS;
+    if (!isFinite(raw)) return 413;
+    return Math.round(raw * 100);
+  }
+  function gasDollars() {
+    return gasCents() / 100;
+  }
+  function gasWords(dollars) {
+    return "$" + dollars.toFixed(2) + " a gallon";
+  }
+  function usesGas(car) {
+    return car.fuelType === "gas" || car.fuelType === "hybrid";
+  }
+  function fuelScale() {
+    var cents = gasCents();
+    if (cents === 413) return 1;
+    return (cents / 100) / BASE_GAS;
+  }
+  function scaledFuel(car, dollars) {
+    var stored = car.sevenYear.fuel;
+    if (!usesGas(car)) return stored;
+    var cents = Math.round(Number(dollars) * 100);
+    if (cents === 413) return stored;
+    return stored * ((cents / 100) / BASE_GAS);
+  }
+  function costOf(car) {
+    var s = car.sevenYear;
+    if (!usesGas(car) || fuelScale() === 1) return s;
+    var fuel = s.fuel * fuelScale();
+    return {
+      depreciation: s.depreciation,
+      fuel: fuel,
+      maintenance: s.maintenance,
+      insurance: s.insurance,
+      total: s.depreciation + fuel + s.maintenance + s.insurance,
+      residual: s.residual
+    };
+  }
   function yearlyFuel(car) {
-    return car.sevenYear.fuel / 7;
+    return costOf(car).fuel / 7;
+  }
+  function yearlyAt(car, dollars) {
+    return scaledFuel(car, dollars) / 7;
   }
   function stepFloor(n, step) {
     return Math.floor((n + 1e-6) / step) * step;
@@ -1353,14 +1409,68 @@
   function updateSliderLabels() {
     var priceInput = document.getElementById("price-max");
     var fuelInput = document.getElementById("fuel-max");
+    var gasInput = document.getElementById("gas-price");
     var priceText = money(priceInput.value);
     var fuelText = money(fuelInput.value);
+    var gasText = gasWords(gasDollars());
     document.getElementById("price-max-value").textContent = priceText;
     document.getElementById("fuel-max-value").textContent = fuelText;
+    document.getElementById("gas-price-value").textContent = gasText;
     priceInput.setAttribute("aria-valuetext", priceText);
     fuelInput.setAttribute("aria-valuetext", fuelText);
+    gasInput.setAttribute("aria-valuetext", gasText);
     priceInput.setAttribute("aria-label", "Purchase price up to " + priceText);
     fuelInput.setAttribute("aria-label", "Fuel per year up to " + fuelText);
+    gasInput.setAttribute("aria-label", "Gas price " + gasText);
+  }
+  function ensureFuelRoom(prevDollars, nextDollars) {
+    var fuelInput = document.getElementById("fuel-max");
+    var cap = Number(fuelInput.value);
+    var highest = 0;
+    var cover = cap;
+    cars.forEach(function (car) {
+      var now = yearlyAt(car, nextDollars);
+      var before = yearlyAt(car, prevDollars);
+      if (now > highest) highest = now;
+      if (before <= cap + 0.001 && now > cover) cover = now;
+    });
+    var newMax = stepCeil(highest, 50);
+    if (newMax > Number(fuelInput.max)) fuelInput.max = String(newMax);
+    if (cover > cap + 0.001) {
+      var newCap = stepCeil(cover, 50);
+      if (newCap > Number(fuelInput.max)) fuelInput.max = String(newCap);
+      fuelInput.value = String(newCap);
+    }
+  }
+  function cheapestGasHybrid() {
+    var best = null;
+    cars.forEach(function (car) {
+      if (!usesGas(car)) return;
+      if (!best) { best = car; return; }
+      var diff = Math.round(costOf(car).total) - Math.round(costOf(best).total);
+      if (diff < 0 || (diff === 0 && car.price < best.price) || (diff === 0 && car.price === best.price && car.name < best.name)) best = car;
+    });
+    return best;
+  }
+  function updateGasNote() {
+    var note = document.getElementById("gas-note");
+    if (!note) return;
+    var electric = " Electric cars do not use gas, so their cost stays the same.";
+    if (gasCents() === 413) {
+      note.textContent = "This is the Kansas City price the totals started from." + electric;
+      return;
+    }
+    var car = cheapestGasHybrid();
+    var words = gasWords(gasDollars());
+    if (!car) {
+      note.textContent = "At " + words + ", there is no gas or hybrid car in the list." + electric;
+      return;
+    }
+    var diff = Math.round(costOf(car).total) - Math.round(car.sevenYear.total);
+    var who = cityShort(car) + " " + modelOf(car);
+    if (diff < 0) note.textContent = "At " + words + ", the " + who + " costs " + money(-diff) + " less over 7 years." + electric;
+    else if (diff > 0) note.textContent = "At " + words + ", the " + who + " costs " + money(diff) + " more over 7 years." + electric;
+    else note.textContent = "At " + words + ", the " + who + " costs the same over 7 years." + electric;
   }
   function setupSliders() {
     var minPrice = Infinity;
@@ -1470,8 +1580,9 @@
   }
   function showSentence(car, piece, shown) {
     var words = { depreciation: "value lost", fuel: "fuel", maintenance: "maintenance", insurance: "insurance" };
-    var amount = car.sevenYear[piece];
-    var total = car.sevenYear.total || 0;
+    var cost = costOf(car);
+    var amount = cost[piece];
+    var total = cost.total || 0;
     var pct = total ? Math.round(amount / total * 100) : 0;
     var note = document.getElementById("chart-note");
     note.hidden = false;
@@ -1488,14 +1599,15 @@
     var labels = chartLabels(shown);
     var maxTotal = 0;
     for (var i = 0; i < shown.length; i++) {
-      if (shown[i].sevenYear.total > maxTotal) maxTotal = shown[i].sevenYear.total;
+      var rowTotal = costOf(shown[i]).total;
+      if (rowTotal > maxTotal) maxTotal = rowTotal;
     }
     var pieceOrder = ["depreciation", "fuel", "maintenance", "insurance"];
     var pieceLabel = { depreciation: "Value lost", fuel: "Fuel", maintenance: "Maintenance", insurance: "Insurance" };
     var html = "";
     for (var c = 0; c < shown.length; c++) {
       var car = shown[c];
-      var s = car.sevenYear;
+      var s = costOf(car);
       var width = maxTotal ? (s.total / maxTotal * 100) : 100;
       var segs = "";
       for (var p = 0; p < pieceOrder.length; p++) {
@@ -1543,8 +1655,11 @@
 
   function render() {
     syncStickyOffset();
+    updateGasNote();
     var shown = cars.filter(matches).slice().sort(function (a, b) {
-      if (a.sevenYear.total !== b.sevenYear.total) return a.sevenYear.total - b.sevenYear.total;
+      var ta = Math.round(costOf(a).total);
+      var tb = Math.round(costOf(b).total);
+      if (ta !== tb) return ta - tb;
       if (a.price !== b.price) return a.price - b.price;
       return a.name < b.name ? -1 : 1;
     });
@@ -1561,7 +1676,7 @@
     var html = "";
     for (var i = 0; i < shown.length; i++) {
       var car = shown[i];
-      var s = car.sevenYear;
+      var s = costOf(car);
       var open = car.id === openId;
       var b = badge(car);
       var cls = "car" + (isProblem(car) ? " is-problem" : (b ? " is-caution" : ""));
@@ -1637,6 +1752,13 @@
     render();
   });
   document.getElementById("fuel-max").addEventListener("input", function () {
+    updateSliderLabels();
+    render();
+  });
+  document.getElementById("gas-price").addEventListener("input", function () {
+    var nextCents = gasCents();
+    ensureFuelRoom(lastGasCents / 100, nextCents / 100);
+    lastGasCents = nextCents;
     updateSliderLabels();
     render();
   });

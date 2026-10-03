@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cars for Mom and Dad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1c1915;
+    --paper: #f4efe4;
+    --card: #fffdf8;
+    --line: #d9d0c0;
+    --green: #143d32;
+    --green-ink: #f6f1e7;
+    --muted: #3a342c;
+    --warn-bg: #f8d9d4;
+    --warn-ink: #6b1212;
+    --caution-bg: #f6e4bf;
+    --caution-ink: #5a3b06;
+    --focus: #0b5cab;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Atkinson Hyperlegible", "Segoe UI", "Noto Sans", sans-serif;
+    font-size: 18px;
+    line-height: 1.45;
+  }
+  .hero {
+    background: var(--green);
+    color: var(--green-ink);
+    padding: 28px 18px 22px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  h1 {
+    margin: 0 0 10px;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .hero p { margin: 0; font-size: 19px; }
+  .checked { margin-top: 12px !important; font-weight: 700; }
+  main { padding: 0 0 48px; }
+  .tools {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--paper);
+    padding: 14px 0 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .filters, .toggles { display: flex; flex-wrap: wrap; gap: 8px; }
+  .toggles { margin-top: 8px; }
+  button, .listing {
+    font: inherit;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .chip, .toggle {
+    background: var(--card);
+    border: 2px solid var(--green);
+    border-radius: 999px;
+    padding: 10px 14px;
+    min-height: 48px;
+    font-size: 17px;
+  }
+  .chip[aria-pressed="true"], .toggle[aria-pressed="true"] {
+    background: var(--green);
+    color: var(--green-ink);
+  }
+  .count {
+    margin: 14px 0 8px;
+    font-size: 17px;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .jump { margin: 14px 0 0; }
+  .jump a, a { color: var(--green); font-weight: 700; }
+  .hero a { color: var(--green-ink); }
+  .list { display: flex; flex-direction: column; gap: 12px; }
+  .car {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .car.is-problem { border-color: #a32020; }
+  .car.is-caution { border-color: #a56b12; }
+  .toggle-card {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    padding: 16px 16px 14px;
+    color: var(--ink);
+  }
+  .top {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .rank {
+    flex: 0 0 auto;
+    min-width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--green);
+    color: var(--green-ink);
+    font-weight: 700;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .name {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  .city { margin: 2px 0 0; font-size: 18px; }
+  .facts {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    font-size: 18px;
+  }
+  .facts b { font-size: 20px; }
+  .total-line { margin: 10px 0 0; }
+  .total-line strong {
+    display: block;
+    font-size: 28px;
+    line-height: 1.1;
+    color: var(--green);
+  }
+  .total-line span { font-size: 17px; color: var(--muted); font-weight: 700; }
+  .kind {
+    margin: 10px 0 0;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.3;
+  }
+  .badge.warn { background: var(--warn-bg); color: var(--warn-ink); }
+  .badge.caution { background: var(--caution-bg); color: var(--caution-ink); }
+  .chev { font-weight: 700; }
+  .detail { padding: 0 16px 16px; }
+  .detail[hidden] { display: none; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td {
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+    vertical-align: baseline;
+    font-size: 18px;
+  }
+  th { text-align: left; font-weight: 400; padding-right: 12px; }
+  td { text-align: right; font-weight: 700;  }
+  tr.grand th, tr.grand td {
+    font-weight: 700;
+    font-size: 22px;
+    border-bottom: 0;
+    padding-top: 14px;
+  }
+  .sub { display: block; font-size: 17px; color: var(--muted); font-weight: 700; margin-top: 2px; }
+  .notes { margin: 12px 0 0; }
+  .notes p { margin: 0 0 10px; }
+  .package {
+    background: var(--caution-bg);
+    color: var(--caution-ink);
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+  .listing {
+    display: block;
+    margin-top: 8px;
+    background: var(--green);
+    color: var(--green-ink);
+    text-align: center;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 14px 16px;
+    min-height: 52px;
+    font-size: 19px;
+  }
+  .listing:hover, .listing:focus-visible { background: #0e2e26; }
+  .empty {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 18px;
+  }
+  .how { padding: 8px 0 0; }
+  .how h2 { font-size: 28px; margin: 28px 0 8px; }
+  .how p { margin: 0 0 14px; }
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+  @media (max-width: 390px) {
+    h1 { font-size: 30px; }
+    .name { font-size: 20px; }
+    .total-line strong { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <h1>Cars for Mom and Dad</h1>
+    <p>Ranked by what they would cost to own for 7 years, cheapest first, from Kansas City driving.</p>
+    <p class="checked">Prices checked October 3, 2026</p>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <div class="tools">
+      <div class="filters" role="group" aria-label="Which cars to show">
+        <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="chip" data-filter="rows3" aria-pressed="false">3-row only</button>
+        <button type="button" class="chip" data-filter="hybridEv" aria-pressed="false">Hybrid or electric</button>
+        <button type="button" class="chip" data-filter="under30" aria-pressed="false">Under $30,000</button>
+      </div>
+      <div class="toggles">
+        <button type="button" class="toggle" id="hideProblems" aria-pressed="false">Hide problem cars</button>
+      </div>
+    </div>
+    <p class="count" id="count"></p>
+    <div class="list" id="list"></div>
+    <p class="jump"><a href="#how">How we figured this</a></p>
+    <section class="how" id="how">
+      <h2>How we figured this</h2>
+      <p>Each year is 14,959 miles. That is 11,071 miles of ordinary driving, the recent U.S. average, plus four trips from Kansas City to Madison, Wisconsin and back. Each trip is 486 miles one way, so the four round trips are 3,888 highway miles.</p>
+      <p>Gas is $4.13 a gallon, a Kansas City price for regular. Ordinary miles use the combined miles per gallon. The Madison trips use the highway miles per gallon.</p>
+      <p>Charging at home is 15.7 cents per kilowatt-hour. Charging on the Madison trips is about 34 cents per kilowatt-hour in a Tesla, and 48 cents in a Kia electric SUV.</p>
+      <p>Insurance is $1,812 a year for every car. It is included in the 7-year total, but it does not change which car is cheaper.</p>
+      <p>There is no sales tax, no Missouri personal property tax, and no charger. The purchase is cash, with no loan.</p>
+      <p>Maintenance is an average for that kind of car, not a repair quote for this exact one. A gas SUV is about 11 cents a mile, a hybrid about 9 cents, and an electric car about 8 cents. On the Model Y, that average is probably high. Evan's own 2023 Model Y has only needed one set of tires.</p>
+      <p>Each year the car is worth a little less than the year before, starting from today's price. A gas SUV loses about 11% a year, a hybrid about 8%, most electric cars about 16%, a Model Y about 16%, and a Model X about 17%. After 7 years we count what it has lost, not the whole purchase price.</p>
+      <p>The 7-year total is the value it loses, plus 7 years of fuel, maintenance, and insurance. Dollars are rounded to the nearest dollar. If a listing did not state the gas mileage, the car's card says what we used.</p>
+    </section>
+  </div>
+</main>
+<script id="car-data" type="application/json">
+[
+  {
+    "id": "telluride-2020-omaha",
+    "name": "2020 Kia Telluride SX",
+    "year": 2020,
+    "city": "Omaha, NE",
+    "seller": "CarMax Omaha",
+    "price": 27998,
+    "miles": 67310,
+    "url": "https://www.cars.com/vehicledetail/6e45f8df-349c-4095-83b0-bbeb805df5ab/",
+    "drivetrain": "4WD",
+    "fuelType": "gas",
+    "rows": 3,
+    "mpgCity": 19,
+    "mpgHwy": 24,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "suv",
+    "maintClass": "suv",
+    "flags": [],
+    "assumptionNotes": "One owner, no accidents reported, clean title. EPA is 19 city and 24 highway.",
+    "mpgCombined": 21.0,
+    "sevenYear": {
+      "depreciation": 15843,
+      "fuel": 19925,
+      "maintenance": 11068,
+      "insurance": 12684,
+      "total": 59520,
+      "residual": 12155
+    },
+    "maintenancePerMile": 0.1057,
+    "depreciationRate": 0.11237334,
+    "annualFuel": 2846.36
+  },
+  {
+    "id": "explorer-st-2023",
+    "name": "2023 Ford Explorer ST",
+    "year": 2023,
+    "city": "Merriam, KS",
+    "seller": "BMW MINI of Shawnee Mission",
+    "price": 25643,
+    "miles": 101941,
+    "url": "https://www.cars.com/vehicledetail/785cd8bb-ebbd-4c5f-862a-c0977bae45cd/",
+    "drivetrain": "4WD",
+    "fuelType": "gas",
+    "rows": 3,
+    "mpgCity": 18,
+    "mpgHwy": 24,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "suv",
+    "maintClass": "suv",
+    "flags": [
+      "Over 100,000 miles.",
+      "Often wants premium gas. This fuel cost is regular gas, so the real fuel bill may be higher."
+    ],
+    "assumptionNotes": "One owner, clean title. 3.0 liter engine. EPA is 18 city and 24 highway.",
+    "mpgCombined": 20.3,
+    "sevenYear": {
+      "depreciation": 14511,
+      "fuel": 20450,
+      "maintenance": 11068,
+      "insurance": 12684,
+      "total": 58713,
+      "residual": 11132
+    },
+    "maintenancePerMile": 0.1057,
+    "depreciationRate": 0.11237334,
+    "annualFuel": 2921.44
+  },
+  {
+    "id": "explorer-active-2026",
+    "name": "2026 Ford Explorer Active",
+    "year": 2026,
+    "city": "Gower, MO",
+    "seller": "Dennis Sneed Ford",
+    "price": 41198,
+    "miles": 793,
+    "url": "https://www.cars.com/vehicledetail/bbf1ae5c-8220-43d5-bd85-9505712612ad/",
+    "drivetrain": "4WD",
+    "fuelType": "gas",
+    "rows": 3,
+    "mpgCity": 20,
+    "mpgHwy": 27,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "suv",
+    "maintClass": "suv",
+    "flags": [
+      "Ford took this car back and resold it."
+    ],
+    "assumptionNotes": "793 miles, one owner, clean title. The seller says it is in Ford's reacquired-vehicle program. EPA is 20 city and 27 highway.",
+    "mpgCombined": 22.6,
+    "sevenYear": {
+      "depreciation": 23313,
+      "fuel": 18325,
+      "maintenance": 11068,
+      "insurance": 12684,
+      "total": 65390,
+      "residual": 17885
+    },
+    "maintenancePerMile": 0.1057,
+    "depreciationRate": 0.11237334,
+    "annualFuel": 2617.87
+  },
+  {
+    "id": "explorer-limited-2023",
+    "name": "2023 Ford Explorer Limited",
+    "year": 2023,
+    "city": "Gladstone, MO",
+    "seller": "DriveTime Gladstone",
+    "price": 28695,
+    "miles": 34048,
+    "url": "https://www.cars.com/vehicledetail/898540b5-54ec-41a6-9708-af3c6e3bc19d/",
+    "drivetrain": "RWD",
+    "fuelType": "gas",
+    "rows": 3,
+    "mpgCity": 21,
+    "mpgHwy": 28,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "suv",
+    "maintClass": "suv",
+    "flags": [],
+    "assumptionNotes": "One owner, clean title. Rear-wheel drive. EPA is 21 city and 28 highway.",
+    "mpgCombined": 23.7,
+    "sevenYear": {
+      "depreciation": 16238,
+      "fuel": 17519,
+      "maintenance": 11068,
+      "insurance": 12684,
+      "total": 57509,
+      "residual": 12457
+    },
+    "maintenancePerMile": 0.1057,
+    "depreciationRate": 0.11237334,
+    "annualFuel": 2502.73
+  },
+  {
+    "id": "explorer-2020",
+    "name": "2020 Ford Explorer",
+    "year": 2020,
+    "city": "Independence, MO",
+    "seller": "DriveTime Independence",
+    "price": 20895,
+    "miles": 52090,
+    "url": "https://www.cars.com/vehicledetail/e6ea5e05-219d-4151-bfa3-3970da6d1934/",
+    "drivetrain": "4WD",
+    "fuelType": "gas",
+    "rows": 3,
+    "mpgCity": 20,
+    "mpgHwy": 27,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "suv",
+    "maintClass": "suv",
+    "flags": [],
+    "assumptionNotes": "More than one owner, clean title. 2.3 liter engine. EPA is 20 city and 27 highway.",
+    "mpgCombined": 22.6,
+    "sevenYear": {
+      "depreciation": 11824,
+      "fuel": 18325,
+      "maintenance": 11068,
+      "insurance": 12684,
+      "total": 53901,
+      "residual": 9071
+    },
+    "maintenancePerMile": 0.1057,
+    "depreciationRate": 0.11237334,
+    "annualFuel": 2617.87
+  },
+  {
+    "id": "modely-2023",
+    "name": "2023 Tesla Model Y Performance",
+    "year": 2023,
+    "city": "Kansas City, KS",
+    "seller": "Legends Toyota",
+    "price": 34498,
+    "miles": 39010,
+    "url": "https://www.cars.com/vehicledetail/59004509-b623-408b-9b34-a4b77ec2f00f/",
+    "drivetrain": "AWD",
+    "fuelType": "electric",
+    "rows": 2,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 30,
+    "kwhPer100Hwy": 31.8,
+    "fastChargePerKwh": 0.3408,
+    "depreciationClass": "model-y",
+    "maintClass": "ev",
+    "flags": [],
+    "assumptionNotes": "One owner, clean title. About 303 miles of range. Maintenance here is a class average for electric cars, and it is probably high. Evan's own 2023 Model Y has only needed one set of tires.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 24189,
+      "fuel": 6602,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 51978,
+      "residual": 10309
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.1584837,
+    "annualFuel": 943.14
+  },
+  {
+    "id": "sportage-topeka",
+    "name": "2025 Kia Sportage Hybrid LX AWD",
+    "year": 2025,
+    "city": "Topeka, KS",
+    "seller": "Briggs Kia",
+    "price": 27499,
+    "miles": 22649,
+    "url": "https://www.briggscdjroffortscott.com/used-Fort+Scott-2025-Kia-Sportage+Hybrid-LX-KNDPUCDG9S7217925",
+    "drivetrain": "AWD",
+    "fuelType": "hybrid",
+    "rows": 2,
+    "mpgCity": 38,
+    "mpgHwy": 38,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "hybrid",
+    "maintClass": "hybrid",
+    "flags": [],
+    "assumptionNotes": "Kia certified, one owner, clean title. The listing confirms all-wheel drive and 38 city / 38 highway. Price is the dealer's $27,499 figure. The page says that includes a $399 paperwork fee, so the fee is not added again. The ad is on the Briggs Fort Scott website, and it also lists the Briggs Kia store in Topeka.",
+    "mpgCombined": 38.0,
+    "sevenYear": {
+      "depreciation": 12583,
+      "fuel": 11381,
+      "maintenance": 9518,
+      "insurance": 12684,
+      "total": 46166,
+      "residual": 14916
+    },
+    "maintenancePerMile": 0.0909,
+    "depreciationRate": 0.08368135,
+    "annualFuel": 1625.81
+  },
+  {
+    "id": "santafe-2025",
+    "name": "2025 Hyundai Santa Fe Calligraphy",
+    "year": 2025,
+    "city": "Topeka, KS",
+    "seller": "BMW VW of Topeka",
+    "price": 36160,
+    "miles": 21648,
+    "url": "https://www.cars.com/vehicledetail/550dd909-da39-421a-938a-4ad97600377d/",
+    "drivetrain": "FWD",
+    "fuelType": "gas",
+    "rows": 3,
+    "mpgCity": 20,
+    "mpgHwy": 29,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "suv",
+    "maintClass": "suv",
+    "flags": [],
+    "assumptionNotes": "One owner, clean title. Front-wheel drive. The listing showed 20 to 29 mpg, so that is what this uses.",
+    "mpgCombined": 23.2,
+    "sevenYear": {
+      "depreciation": 20462,
+      "fuel": 17672,
+      "maintenance": 11068,
+      "insurance": 12684,
+      "total": 61886,
+      "residual": 15698
+    },
+    "maintenancePerMile": 0.1057,
+    "depreciationRate": 0.11237334,
+    "annualFuel": 2524.53
+  },
+  {
+    "id": "ev9-title",
+    "name": "2024 Kia EV9 Wind AWD",
+    "year": 2024,
+    "city": "Kansas City, KS",
+    "seller": "Victory CDJR",
+    "price": 38290,
+    "miles": 22222,
+    "url": "https://www.cars.com/vehicledetail/186a0e1f-2474-489e-b612-9ab83c292786/",
+    "drivetrain": "AWD",
+    "fuelType": "electric",
+    "rows": 3,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 41,
+    "kwhPer100Hwy": 44.9,
+    "fastChargePerKwh": 0.48,
+    "depreciationClass": "ev",
+    "maintClass": "ev",
+    "flags": [
+      "Do not buy. The listing reports a title problem."
+    ],
+    "assumptionNotes": "About 280 miles of range. Do not buy this one because of the title.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 26619,
+      "fuel": 10857,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 58663,
+      "residual": 11671
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.15610435,
+    "annualFuel": 1551.04
+  },
+  {
+    "id": "ev9-wind",
+    "name": "2024 Kia EV9 Wind AWD",
+    "year": 2024,
+    "city": "Kansas City, MO",
+    "seller": "Wood Nissan",
+    "price": 41160,
+    "miles": 21593,
+    "url": "https://www.cars.com/vehicledetail/e62a808f-03df-4fa5-ac9e-4becd31feeb0/",
+    "drivetrain": "AWD",
+    "fuelType": "electric",
+    "rows": 3,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 41,
+    "kwhPer100Hwy": 44.9,
+    "fastChargePerKwh": 0.48,
+    "depreciationClass": "ev",
+    "maintClass": "ev",
+    "flags": [],
+    "assumptionNotes": "One owner, clean title. About 280 miles of range.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 28614,
+      "fuel": 10857,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 60658,
+      "residual": 12546
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.15610435,
+    "annualFuel": 1551.04
+  },
+  {
+    "id": "ev9-land",
+    "name": "2024 Kia EV9 Land AWD",
+    "year": 2024,
+    "city": "Lee's Summit, MO",
+    "seller": "Lee's Summit Subaru",
+    "price": 41598,
+    "miles": 21837,
+    "url": "https://www.cars.com/vehicledetail/620ea27e-96c1-40c7-a64b-e50ef326724f/",
+    "drivetrain": "AWD",
+    "fuelType": "electric",
+    "rows": 3,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 41,
+    "kwhPer100Hwy": 44.9,
+    "fastChargePerKwh": 0.48,
+    "depreciationClass": "ev",
+    "maintClass": "ev",
+    "flags": [
+      "Accidents reported."
+    ],
+    "assumptionNotes": "Clean title, but accidents were reported. About 304 miles of range. Electricity use is the same EPA figure as the Wind.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 28919,
+      "fuel": 10857,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 60963,
+      "residual": 12679
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.15610435,
+    "annualFuel": 1551.04
+  },
+  {
+    "id": "modelx-2017",
+    "name": "2017 Tesla Model X 75D",
+    "year": 2017,
+    "city": "Overland Park, KS",
+    "seller": "Bob Allen Ford",
+    "price": 24544,
+    "miles": 71242,
+    "url": "https://www.cars.com/vehicledetail/3510cecf-d929-497f-8c5c-9fe02fa08da4/",
+    "drivetrain": "AWD",
+    "fuelType": "electric",
+    "rows": 3,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 36,
+    "kwhPer100Hwy": 35.5,
+    "fastChargePerKwh": 0.3408,
+    "depreciationClass": "model-x",
+    "maintClass": "ev",
+    "flags": [
+      "Battery warranty has expired. The price looks low because of that."
+    ],
+    "assumptionNotes": "More than one owner, clean title. About 237 miles of range. The battery warranty is already over, so a big repair would be out of pocket.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 18023,
+      "fuel": 7676,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 46886,
+      "residual": 6521
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.1725032,
+    "annualFuel": 1096.52
+  },
+  {
+    "id": "modelx-2020",
+    "name": "2020 Tesla Model X Long Range",
+    "year": 2020,
+    "city": "Kansas City, MO",
+    "seller": "Wood Nissan",
+    "price": 35998,
+    "miles": 60879,
+    "url": "https://www.cars.com/vehicledetail/030167c9-a2f8-496c-9e77-de78404537ee/",
+    "drivetrain": "AWD",
+    "fuelType": "electric",
+    "rows": 3,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 32,
+    "kwhPer100Hwy": 33.4,
+    "fastChargePerKwh": 0.3408,
+    "depreciationClass": "model-x",
+    "maintClass": "ev",
+    "flags": [],
+    "assumptionNotes": "More than one owner, clean title. Listed range about 328 miles.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 26434,
+      "fuel": 6994,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 54615,
+      "residual": 9564
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.1725032,
+    "annualFuel": 999.12
+  },
+  {
+    "id": "modelx-2021",
+    "name": "2021 Tesla Model X Long Range",
+    "year": 2021,
+    "city": "Bentonville, AR",
+    "seller": "McLarty Daniel Nissan",
+    "price": 40959,
+    "miles": 50933,
+    "url": "https://www.cars.com/vehicledetail/2ad85a5a-8e87-464c-a8f8-d2e30f27654a/",
+    "drivetrain": "AWD",
+    "fuelType": "electric",
+    "rows": 3,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 32,
+    "kwhPer100Hwy": 33.4,
+    "fastChargePerKwh": 0.3408,
+    "depreciationClass": "model-x",
+    "maintClass": "ev",
+    "flags": [],
+    "assumptionNotes": "More than one owner, clean title. Listed range about 371 miles. Charging cost uses the 2020 Long Range Plus electricity figures from the cost sheet.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 30077,
+      "fuel": 6994,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 58258,
+      "residual": 10882
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.1725032,
+    "annualFuel": 999.12
+  },
+  {
+    "id": "modelx-2022",
+    "name": "2022 Tesla Model X",
+    "year": 2022,
+    "city": "Bentonville, AR",
+    "seller": "Crain Kia",
+    "price": 37329,
+    "miles": 137506,
+    "url": "https://www.cars.com/vehicledetail/a27aad7f-4d7e-4594-87dc-2f1019981586/",
+    "drivetrain": "AWD",
+    "fuelType": "electric",
+    "rows": 3,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 33,
+    "kwhPer100Hwy": 34.7,
+    "fastChargePerKwh": 0.3408,
+    "depreciationClass": "model-x",
+    "maintClass": "ev",
+    "flags": [
+      "Skip. 137,506 miles is too many."
+    ],
+    "assumptionNotes": "The seller said one owner. A history report said more than one. Skip this one because of the miles.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 27411,
+      "fuel": 7236,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 55834,
+      "residual": 9918
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.1725032,
+    "annualFuel": 1033.74
+  },
+  {
+    "id": "modelx-2019",
+    "name": "2019 Tesla Model X Long Range",
+    "year": 2019,
+    "city": "Joplin, MO",
+    "seller": "Landers Chevrolet Cadillac",
+    "price": 32243,
+    "miles": 72093,
+    "url": "https://www.cars.com/vehicledetail/9cba6bea-2cf7-40e0-9bcc-18ed1688eb33/",
+    "drivetrain": "AWD",
+    "fuelType": "electric",
+    "rows": 3,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 32,
+    "kwhPer100Hwy": 33.4,
+    "fastChargePerKwh": 0.3408,
+    "depreciationClass": "model-x",
+    "maintClass": "ev",
+    "flags": [],
+    "assumptionNotes": "More than one owner, clean title. About 325 miles of range. The falcon-wing doors and the air suspension are out of warranty. Charging cost uses the 2020 Long Range Plus electricity figures from the cost sheet.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 23677,
+      "fuel": 6994,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 51858,
+      "residual": 8566
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.1725032,
+    "annualFuel": 999.12
+  },
+  {
+    "id": "modely-l-2026",
+    "name": "2026 Tesla Model Y L Premium",
+    "year": 2026,
+    "city": "New from Tesla",
+    "seller": "Tesla",
+    "price": 63630,
+    "miles": 0,
+    "url": "https://www.tesla.com/modely",
+    "drivetrain": "AWD",
+    "fuelType": "electric",
+    "rows": 3,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 25.5,
+    "kwhPer100Hwy": 25.5,
+    "fastChargePerKwh": 0.3408,
+    "depreciationClass": "model-y",
+    "maintClass": "ev",
+    "flags": [],
+    "assumptionNotes": "New six-seat Model Y. The $63,630 price includes destination and is before tax. Electricity use is an estimate, not an EPA number: 25.5 kilowatt-hours per 100 miles. Maintenance is a class average and is probably high. Evan's own 2023 Model Y has only needed one set of tires.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 44615,
+      "fuel": 5470,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 71272,
+      "residual": 19015
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.1584837,
+    "annualFuel": 781.39
+  },
+  {
+    "id": "sportage-merriam",
+    "name": "2025 Kia Sportage Hybrid LX",
+    "year": 2025,
+    "city": "Merriam, KS",
+    "seller": "CarMax Merriam",
+    "price": 26998,
+    "miles": 14697,
+    "url": "https://www.cars.com/vehicledetail/5042bd1c-543f-4dcf-9090-6d70a4ad2fbf/",
+    "drivetrain": "AWD",
+    "fuelType": "hybrid",
+    "rows": 2,
+    "mpgCity": 38,
+    "mpgHwy": 38,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "hybrid",
+    "maintClass": "hybrid",
+    "flags": [
+      "Drivetrain not confirmed. 38 city / 38 highway is assumed."
+    ],
+    "assumptionNotes": "Assumed all-wheel drive and 38 city / 38 highway, the same as the other Sportage Hybrid LX with all-wheel drive. Cars.com said rear-wheel drive, which is probably wrong. That mpg is an assumption, not a number from this listing.",
+    "mpgCombined": 38.0,
+    "sevenYear": {
+      "depreciation": 12354,
+      "fuel": 11381,
+      "maintenance": 9518,
+      "insurance": 12684,
+      "total": 45937,
+      "residual": 14644
+    },
+    "maintenancePerMile": 0.0909,
+    "depreciationRate": 0.08368135,
+    "annualFuel": 1625.81
+  },
+  {
+    "id": "sportage-edmond",
+    "name": "2025 Kia Sportage Hybrid LX FWD",
+    "year": 2025,
+    "city": "Edmond, OK",
+    "seller": "Kalidy Kia",
+    "price": 26000,
+    "miles": 18103,
+    "url": "https://kalidykia.com/for-sale/certified-kia-sportage-hybrid-lx-edmond-ok/2025-kia-sportage-hybrid-lx-kndpu3dg8s7185226",
+    "drivetrain": "FWD",
+    "fuelType": "hybrid",
+    "rows": 2,
+    "mpgCity": 42,
+    "mpgHwy": 44,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "hybrid",
+    "maintClass": "hybrid",
+    "flags": [],
+    "assumptionNotes": "Front-wheel drive. EPA is 42 city and 44 highway. The advertised price is $26,000. A $1,895 Friends for Life package is not included in that price or in the main total.",
+    "packageAlt": {
+      "label": "If you also buy the $1,895 Friends for Life package, the price is $27,895 and the 7-year total is $44,982.",
+      "price": 27895,
+      "sevenYearTotal": 44982,
+      "sevenYear": {
+        "depreciation": 12765,
+        "fuel": 10015,
+        "maintenance": 9518,
+        "insurance": 12684,
+        "total": 44982,
+        "residual": 15130
+      }
+    },
+    "mpgCombined": 42.9,
+    "sevenYear": {
+      "depreciation": 11897,
+      "fuel": 10015,
+      "maintenance": 9518,
+      "insurance": 12684,
+      "total": 44114,
+      "residual": 14103
+    },
+    "maintenancePerMile": 0.0909,
+    "depreciationRate": 0.08368135,
+    "annualFuel": 1430.75
+  },
+  {
+    "id": "explorer-xlt-2023",
+    "name": "2023 Ford Explorer XLT",
+    "year": 2023,
+    "city": "Springfield, MO",
+    "seller": "CarMax Springfield",
+    "price": 29998,
+    "miles": 20106,
+    "url": "https://www.cars.com/vehicledetail/52cb9d43-a0a7-45eb-8a1c-8b1e73a6ba90/",
+    "drivetrain": "RWD",
+    "fuelType": "gas",
+    "rows": 3,
+    "mpgCity": 21,
+    "mpgHwy": 28,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "suv",
+    "maintClass": "suv",
+    "flags": [],
+    "assumptionNotes": "Rear-wheel drive, gasoline, clean title. EPA for this rear-wheel-drive Explorer is 21 city and 28 highway, the same as the 2023 Limited.",
+    "mpgCombined": 23.7,
+    "sevenYear": {
+      "depreciation": 16975,
+      "fuel": 17519,
+      "maintenance": 11068,
+      "insurance": 12684,
+      "total": 58246,
+      "residual": 13023
+    },
+    "maintenancePerMile": 0.1057,
+    "depreciationRate": 0.11237334,
+    "annualFuel": 2502.73
+  },
+  {
+    "id": "telluride-2022-hiawatha",
+    "name": "2022 Kia Telluride SX",
+    "year": 2022,
+    "city": "Hiawatha, IA",
+    "seller": "McGrath Ford",
+    "price": 30995,
+    "miles": 38280,
+    "url": "https://www.cars.com/vehicledetail/86f0f81f-3686-44ff-b3e5-623fe18a739b/",
+    "drivetrain": "AWD",
+    "fuelType": "gas",
+    "rows": 3,
+    "mpgCity": 19,
+    "mpgHwy": 24,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "suv",
+    "maintClass": "suv",
+    "flags": [],
+    "assumptionNotes": "Clean title. EPA for the 2022 Telluride SX with all-wheel drive is 19 city and 24 highway, the same as the 2020 SX.",
+    "mpgCombined": 21.0,
+    "sevenYear": {
+      "depreciation": 17539,
+      "fuel": 19925,
+      "maintenance": 11068,
+      "insurance": 12684,
+      "total": 61216,
+      "residual": 13456
+    },
+    "maintenancePerMile": 0.1057,
+    "depreciationRate": 0.11237334,
+    "annualFuel": 2846.36
+  },
+  {
+    "id": "telluride-2025-chesterfield",
+    "name": "2025 Kia Telluride S",
+    "year": 2025,
+    "city": "Chesterfield, MO",
+    "seller": "EchoPark Chesterfield",
+    "price": 31618,
+    "miles": 28961,
+    "url": "https://www.cars.com/vehicledetail/e320a38d-cbcf-4981-8f40-645c9fa76bd2/",
+    "drivetrain": "AWD",
+    "fuelType": "gas",
+    "rows": 3,
+    "mpgCity": 18,
+    "mpgHwy": 23,
+    "kwhPer100": null,
+    "kwhPer100Hwy": null,
+    "fastChargePerKwh": null,
+    "depreciationClass": "suv",
+    "maintClass": "suv",
+    "flags": [],
+    "assumptionNotes": "Clean title. EPA for every 2025 Telluride with all-wheel drive is 18 city and 23 highway (fueleconomy.gov). 20 city and 26 highway is the front-wheel-drive Telluride, so it is not used here.",
+    "mpgCombined": 20.0,
+    "sevenYear": {
+      "depreciation": 17892,
+      "fuel": 20890,
+      "maintenance": 11068,
+      "insurance": 12684,
+      "total": 62534,
+      "residual": 13726
+    },
+    "maintenancePerMile": 0.1057,
+    "depreciationRate": 0.11237334,
+    "annualFuel": 2984.31
+  }
+]
+</script>
+<script>
+(function () {
+  var embedded = JSON.parse(document.getElementById("car-data").textContent);
+  var filter = "all";
+  var hideProblems = false;
+  var openId = null;
+  var cars = embedded;
+
+  function money(n) {
+    return "$" + Math.round(n).toLocaleString("en-US");
+  }
+  function milesLabel(n) {
+    if (!n) return "New";
+    return Number(n).toLocaleString("en-US") + " miles";
+  }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (ch) {
+      return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch];
+    });
+  }
+  function kindLabel(car) {
+    var rows = car.rows === 3 ? "3-row" : "2-row";
+    var fuel = car.fuelType === "gas" ? "gas" : car.fuelType;
+    return rows + " " + fuel;
+  }
+  function driveWords(code) {
+    var map = { AWD: "all-wheel drive", "4WD": "four-wheel drive", FWD: "front-wheel drive", RWD: "rear-wheel drive" };
+    return map[code] || code || "";
+  }
+  function isProblem(car) {
+    var text = (car.flags || []).join(" ").toLowerCase();
+    if (car.miles >= 100000) return true;
+    if (text.indexOf("do not buy") !== -1 || text.indexOf("title problem") !== -1 || text.indexOf("title issue") !== -1) return true;
+    if (text.indexOf("battery warranty") !== -1) return true;
+    if (text.indexOf("skip") !== -1) return true;
+    return false;
+  }
+  function badge(car) {
+    var flags = car.flags || [];
+    function find(re) {
+      for (var i = 0; i < flags.length; i++) if (re.test(flags[i])) return flags[i];
+      return "";
+    }
+    if (find(/do not buy|title/i)) return { text: "Do not buy: title problem", level: "warn" };
+    if (find(/skip|100,000/i) || car.miles >= 100000) return { text: "Skip: too many miles", level: "warn" };
+    if (find(/battery warranty/i)) return { text: "Battery warranty expired", level: "warn" };
+    if (find(/accident/i)) return { text: "Accidents reported", level: "caution" };
+    if (find(/ford took/i)) return { text: "Ford resold this car", level: "caution" };
+    if (find(/premium/i)) return { text: "May need premium gas", level: "caution" };
+    if (find(/assumed|drivetrain/i)) return { text: "Mileage assumed", level: "caution" };
+    return null;
+  }
+  function matches(car) {
+    if (hideProblems && isProblem(car)) return false;
+    if (filter === "rows3") return car.rows === 3;
+    if (filter === "hybridEv") return car.fuelType === "hybrid" || car.fuelType === "electric";
+    if (filter === "under30") return car.price < 30000;
+    return true;
+  }
+  function safeUrl(url) {
+    if (typeof url === "string" && /^https:\/\//i.test(url)) return url;
+    return "";
+  }
+
+  function render() {
+    var shown = cars.filter(matches).slice().sort(function (a, b) {
+      if (a.sevenYear.total !== b.sevenYear.total) return a.sevenYear.total - b.sevenYear.total;
+      if (a.price !== b.price) return a.price - b.price;
+      return a.name < b.name ? -1 : 1;
+    });
+    var count = document.getElementById("count");
+    count.textContent = shown.length === 1
+      ? "1 car, cheapest first"
+      : shown.length + " cars, cheapest first";
+    var list = document.getElementById("list");
+    if (!shown.length) {
+      list.innerHTML = '<p class="empty">No cars match. Try another choice above.</p>';
+      return;
+    }
+    var html = "";
+    for (var i = 0; i < shown.length; i++) {
+      var car = shown[i];
+      var s = car.sevenYear;
+      var open = car.id === openId;
+      var b = badge(car);
+      var cls = "car" + (isProblem(car) ? " is-problem" : (b ? " is-caution" : ""));
+      var badgeHtml = b ? '<div class="badge ' + b.level + '">' + esc(b.text) + "</div>" : "";
+      var flagHtml = "";
+      (car.flags || []).forEach(function (f) {
+        flagHtml += "<p>" + esc(f) + "</p>";
+      });
+      var notes = car.assumptionNotes ? "<p>" + esc(car.assumptionNotes) + "</p>" : "";
+      var seller = car.seller ? "<p>Seller: " + esc(car.seller) + "</p>" : "";
+      var drive = driveWords(car.drivetrain);
+      var driveLine = drive ? "<p>" + esc(drive.charAt(0).toUpperCase() + drive.slice(1)) + ".</p>" : "";
+      var pkg = "";
+      if (car.packageAlt && car.packageAlt.label) {
+        pkg = '<p class="package">' + esc(car.packageAlt.label) + "</p>";
+      }
+      var href = safeUrl(car.url);
+      var link = href
+        ? '<a class="listing" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">See the listing</a>'
+        : "";
+      html += '<article class="' + cls + '" id="car-' + esc(car.id) + '">' +
+        '<button type="button" class="toggle-card" aria-expanded="' + (open ? "true" : "false") + '" aria-controls="detail-' + esc(car.id) + '" data-id="' + esc(car.id) + '">' +
+          '<div class="top"><div class="rank">' + (i + 1) + '</div><div><p class="name">' + esc(car.name) + '</p><p class="city">' + esc(car.city) + '</p></div></div>' +
+          '<div class="facts"><span>Price <b>' + money(car.price) + '</b></span><span><b>' + esc(milesLabel(car.miles)) + '</b></span></div>' +
+          '<p class="total-line"><strong>' + money(s.total) + '</strong><span>to own for 7 years</span></p>' +
+          '<p class="kind">' + esc(kindLabel(car)) + ' <span class="chev" aria-hidden="true">' + (open ? "Hide" : "Details") + "</span></p>" +
+          badgeHtml +
+        "</button>" +
+        '<div class="detail" id="detail-' + esc(car.id) + '"' + (open ? "" : " hidden") + ">" +
+          "<table><tbody>" +
+            '<tr><th scope="row">Purchase price</th><td>' + money(car.price) + "</td></tr>" +
+            '<tr><th scope="row">Value lost over 7 years<span class="sub">Still worth about ' + money(s.residual) + " after 7 years</span></th><td>" + money(s.depreciation) + "</td></tr>" +
+            '<tr><th scope="row">Fuel for 7 years</th><td>' + money(s.fuel) + "</td></tr>" +
+            '<tr><th scope="row">Maintenance</th><td>' + money(s.maintenance) + "</td></tr>" +
+            '<tr><th scope="row">Insurance<span class="sub">Same for every car, so it does not change the order</span></th><td>' + money(s.insurance) + "</td></tr>" +
+            '<tr class="grand"><th scope="row">7-year total</th><td>' + money(s.total) + "</td></tr>" +
+          "</tbody></table>" +
+          '<div class="notes">' + pkg + flagHtml + driveLine + seller + notes + "</div>" +
+          link +
+        "</div></article>";
+    }
+    list.innerHTML = html;
+  }
+
+  document.querySelectorAll(".chip").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      filter = btn.getAttribute("data-filter");
+      document.querySelectorAll(".chip").forEach(function (other) {
+        other.setAttribute("aria-pressed", other === btn ? "true" : "false");
+      });
+      render();
+    });
+  });
+  document.getElementById("hideProblems").addEventListener("click", function () {
+    hideProblems = !hideProblems;
+    this.setAttribute("aria-pressed", hideProblems ? "true" : "false");
+    render();
+  });
+  document.getElementById("list").addEventListener("click", function (event) {
+    var btn = event.target.closest(".toggle-card");
+    if (!btn) return;
+    var id = btn.getAttribute("data-id");
+    openId = openId === id ? null : id;
+    render();
+    if (openId) {
+      var el = document.getElementById("car-" + openId);
+      if (el) el.querySelector(".toggle-card").focus();
+    }
+  });
+
+  function start(data) {
+    if (Array.isArray(data) && data.length && data[0].sevenYear) cars = data;
+    render();
+  }
+  start(embedded);
+  fetch("./cars.json", { cache: "no-store" })
+    .then(function (res) { if (!res.ok) throw new Error("no json"); return res.json(); })
+    .then(function (data) { start(data); })
+    .catch(function () {});
+})();
+</script>
+<noscript><div class="wrap" style="padding:18px"><p>JavaScript is off, so the filters will not work. Here is the same ranking, cheapest first.</p><ol><li><strong>1. 2025 Kia Sportage Hybrid LX FWD</strong>, Edmond, OK. Price $26,000. 18,103 miles. 7-year total $44,114. 2-row hybrid. <a href="https://kalidykia.com/for-sale/certified-kia-sportage-hybrid-lx-edmond-ok/2025-kia-sportage-hybrid-lx-kndpu3dg8s7185226">Listing</a></li><li><strong>2. 2025 Kia Sportage Hybrid LX</strong>, Merriam, KS. Price $26,998. 14,697 miles. 7-year total $45,937. 2-row hybrid. Drivetrain not confirmed. 38 city / 38 highway is assumed.. <a href="https://www.cars.com/vehicledetail/5042bd1c-543f-4dcf-9090-6d70a4ad2fbf/">Listing</a></li><li><strong>3. 2025 Kia Sportage Hybrid LX AWD</strong>, Topeka, KS. Price $27,499. 22,649 miles. 7-year total $46,166. 2-row hybrid. <a href="https://www.briggscdjroffortscott.com/used-Fort+Scott-2025-Kia-Sportage+Hybrid-LX-KNDPUCDG9S7217925">Listing</a></li><li><strong>4. 2017 Tesla Model X 75D</strong>, Overland Park, KS. Price $24,544. 71,242 miles. 7-year total $46,886. 3-row electric. Battery warranty has expired. The price looks low because of that.. <a href="https://www.cars.com/vehicledetail/3510cecf-d929-497f-8c5c-9fe02fa08da4/">Listing</a></li><li><strong>5. 2019 Tesla Model X Long Range</strong>, Joplin, MO. Price $32,243. 72,093 miles. 7-year total $51,858. 3-row electric. <a href="https://www.cars.com/vehicledetail/9cba6bea-2cf7-40e0-9bcc-18ed1688eb33/">Listing</a></li><li><strong>6. 2023 Tesla Model Y Performance</strong>, Kansas City, KS. Price $34,498. 39,010 miles. 7-year total $51,978. 2-row electric. <a href="https://www.cars.com/vehicledetail/59004509-b623-408b-9b34-a4b77ec2f00f/">Listing</a></li><li><strong>7. 2020 Ford Explorer</strong>, Independence, MO. Price $20,895. 52,090 miles. 7-year total $53,901. 3-row gas. <a href="https://www.cars.com/vehicledetail/e6ea5e05-219d-4151-bfa3-3970da6d1934/">Listing</a></li><li><strong>8. 2020 Tesla Model X Long Range</strong>, Kansas City, MO. Price $35,998. 60,879 miles. 7-year total $54,615. 3-row electric. <a href="https://www.cars.com/vehicledetail/030167c9-a2f8-496c-9e77-de78404537ee/">Listing</a></li><li><strong>9. 2022 Tesla Model X</strong>, Bentonville, AR. Price $37,329. 137,506 miles. 7-year total $55,834. 3-row electric. Skip. 137,506 miles is too many.. <a href="https://www.cars.com/vehicledetail/a27aad7f-4d7e-4594-87dc-2f1019981586/">Listing</a></li><li><strong>10. 2023 Ford Explorer Limited</strong>, Gladstone, MO. Price $28,695. 34,048 miles. 7-year total $57,509. 3-row gas. <a href="https://www.cars.com/vehicledetail/898540b5-54ec-41a6-9708-af3c6e3bc19d/">Listing</a></li><li><strong>11. 2023 Ford Explorer XLT</strong>, Springfield, MO. Price $29,998. 20,106 miles. 7-year total $58,246. 3-row gas. <a href="https://www.cars.com/vehicledetail/52cb9d43-a0a7-45eb-8a1c-8b1e73a6ba90/">Listing</a></li><li><strong>12. 2021 Tesla Model X Long Range</strong>, Bentonville, AR. Price $40,959. 50,933 miles. 7-year total $58,258. 3-row electric. <a href="https://www.cars.com/vehicledetail/2ad85a5a-8e87-464c-a8f8-d2e30f27654a/">Listing</a></li><li><strong>13. 2024 Kia EV9 Wind AWD</strong>, Kansas City, KS. Price $38,290. 22,222 miles. 7-year total $58,663. 3-row electric. Do not buy. The listing reports a title problem.. <a href="https://www.cars.com/vehicledetail/186a0e1f-2474-489e-b612-9ab83c292786/">Listing</a></li><li><strong>14. 2023 Ford Explorer ST</strong>, Merriam, KS. Price $25,643. 101,941 miles. 7-year total $58,713. 3-row gas. Over 100,000 miles.. <a href="https://www.cars.com/vehicledetail/785cd8bb-ebbd-4c5f-862a-c0977bae45cd/">Listing</a></li><li><strong>15. 2020 Kia Telluride SX</strong>, Omaha, NE. Price $27,998. 67,310 miles. 7-year total $59,520. 3-row gas. <a href="https://www.cars.com/vehicledetail/6e45f8df-349c-4095-83b0-bbeb805df5ab/">Listing</a></li><li><strong>16. 2024 Kia EV9 Wind AWD</strong>, Kansas City, MO. Price $41,160. 21,593 miles. 7-year total $60,658. 3-row electric. <a href="https://www.cars.com/vehicledetail/e62a808f-03df-4fa5-ac9e-4becd31feeb0/">Listing</a></li><li><strong>17. 2024 Kia EV9 Land AWD</strong>, Lee's Summit, MO. Price $41,598. 21,837 miles. 7-year total $60,963. 3-row electric. Accidents reported.. <a href="https://www.cars.com/vehicledetail/620ea27e-96c1-40c7-a64b-e50ef326724f/">Listing</a></li><li><strong>18. 2022 Kia Telluride SX</strong>, Hiawatha, IA. Price $30,995. 38,280 miles. 7-year total $61,216. 3-row gas. <a href="https://www.cars.com/vehicledetail/86f0f81f-3686-44ff-b3e5-623fe18a739b/">Listing</a></li><li><strong>19. 2025 Hyundai Santa Fe Calligraphy</strong>, Topeka, KS. Price $36,160. 21,648 miles. 7-year total $61,886. 3-row gas. <a href="https://www.cars.com/vehicledetail/550dd909-da39-421a-938a-4ad97600377d/">Listing</a></li><li><strong>20. 2025 Kia Telluride S</strong>, Chesterfield, MO. Price $31,618. 28,961 miles. 7-year total $62,534. 3-row gas. <a href="https://www.cars.com/vehicledetail/e320a38d-cbcf-4981-8f40-645c9fa76bd2/">Listing</a></li><li><strong>21. 2026 Ford Explorer Active</strong>, Gower, MO. Price $41,198. 793 miles. 7-year total $65,390. 3-row gas. Ford took this car back and resold it.. <a href="https://www.cars.com/vehicledetail/bbf1ae5c-8220-43d5-bd85-9505712612ad/">Listing</a></li><li><strong>22. 2026 Tesla Model Y L Premium</strong>, New from Tesla. Price $63,630. 0 miles. 7-year total $71,272. 3-row electric. <a href="https://www.tesla.com/modely">Listing</a></li></ol></div></noscript>
+</body>
+</html>

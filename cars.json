@@ -774,5 +774,39 @@
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
     "annualFuel": 2984.31
+  },
+  {
+    "id": "modely-2026-rwd",
+    "name": "2026 Tesla Model Y",
+    "year": 2026,
+    "city": "New from Tesla",
+    "seller": "Tesla",
+    "price": 41630,
+    "miles": 0,
+    "url": "https://www.tesla.com/modely/design#overview",
+    "drivetrain": "RWD",
+    "fuelType": "electric",
+    "rows": 2,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 24,
+    "kwhPer100Hwy": 26.12,
+    "fastChargePerKwh": 0.3408,
+    "depreciationClass": "model-y",
+    "maintClass": "ev",
+    "flags": [],
+    "assumptionNotes": "New rear-wheel-drive Model Y, the cheapest one Tesla sells. The $41,630 price includes the $1,390 destination fee and the $250 order fee, and it is before tax. Checked October 3, 2026, for a Kansas City delivery. EPA says 321 miles of range, 24 kilowatt-hours per 100 miles combined, and 129 MPGe on the highway. Five seats, no third row. Maintenance is a class average and is probably high. Evan's own 2023 Model Y has only needed one set of tires.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 29189,
+      "fuel": 5345,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 55721,
+      "residual": 12441
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.1584837,
+    "annualFuel": 763.57
   }
 ]

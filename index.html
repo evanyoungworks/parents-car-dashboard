@@ -21,6 +21,9 @@
     --caution-bg: #f6e4bf;
     --caution-ink: #5a3b06;
     --focus: #0b5cab;
+    --lost: #8f3d2c;
+    --maint: #a16207;
+    --ins: #0b5cab;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -214,10 +217,197 @@
     outline: 3px solid var(--focus);
     outline-offset: 3px;
   }
+
+  .sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 0 18px 6px;
+  }
+  .slider {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "words words"
+      "range value";
+    gap: 2px 12px;
+    align-items: center;
+  }
+  .slider-top {
+    grid-area: words;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .slider-value {
+    grid-area: value;
+    color: var(--green);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  .slider input[type="range"] {
+    grid-area: range;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 48px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .slider input[type="range"]:focus { outline: none; }
+  .slider input[type="range"]:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+  .slider input[type="range"]::-webkit-slider-runnable-track {
+    height: 16px;
+    background: var(--line);
+    border: 2px solid var(--green);
+    border-radius: 999px;
+  }
+  .slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 48px;
+    height: 48px;
+    margin-top: -18px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 4px solid var(--card);
+    box-shadow: 0 0 0 2px var(--green);
+  }
+  .slider input[type="range"]::-moz-range-track {
+    height: 16px;
+    background: var(--line);
+    border: 2px solid var(--green);
+    border-radius: 999px;
+  }
+  .slider input[type="range"]::-moz-range-thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 4px solid var(--card);
+    box-shadow: 0 0 0 2px var(--green);
+  }
+  .car { scroll-margin-top: var(--sticky-offset, 200px); }
+  .money-chart {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 4px 0 14px;
+  }
+  .money-chart[hidden] { display: none !important; }
+  .money-chart h2 {
+    margin: 0 0 10px;
+    font-size: 28px;
+    line-height: 1.2;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 12px;
+  }
+  .legend-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 8px 14px;
+    background: var(--card);
+    border: 2px solid var(--green);
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 17px;
+  }
+  .legend-btn[aria-pressed="true"] {
+    background: var(--green);
+    color: var(--green-ink);
+  }
+  .swatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    flex: 0 0 auto;
+    box-shadow: inset 0 0 0 2px var(--card);
+  }
+  .swatch-depreciation { background: var(--lost); }
+  .swatch-fuel { background: var(--green); }
+  .swatch-maintenance { background: var(--maint); }
+  .swatch-insurance { background: var(--ins); }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    column-gap: 8px;
+    align-items: center;
+    margin: 0 0 8px;
+  }
+  .bar-name {
+    width: 100%;
+    min-height: 48px;
+    padding: 4px 0;
+    background: transparent;
+    border: 0;
+    color: var(--green);
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.2;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+  .bar-name:hover, .bar-name:focus-visible { text-decoration: underline; }
+  .bar {
+    display: flex;
+    height: 48px;
+    max-width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--line);
+  }
+  .seg {
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+  }
+  .seg-depreciation { background: var(--lost); }
+  .seg-fuel { background: var(--green); }
+  .seg-maintenance { background: var(--maint); }
+  .seg-insurance { background: var(--ins); }
+  .seg.is-picked { box-shadow: inset 0 0 0 4px var(--ink); }
+  .money-chart[data-highlight] .seg { opacity: 0.28; }
+  .money-chart[data-highlight="depreciation"] .seg-depreciation,
+  .money-chart[data-highlight="fuel"] .seg-fuel,
+  .money-chart[data-highlight="maintenance"] .seg-maintenance,
+  .money-chart[data-highlight="insurance"] .seg-insurance {
+    opacity: 1;
+    box-shadow: inset 0 0 0 3px var(--ink);
+  }
+  .chart-note {
+    margin: 12px 0 0;
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  .chart-note[hidden] { display: none !important; }
+
   @media (max-width: 390px) {
     h1 { font-size: 30px; }
     .name { font-size: 20px; }
     .total-line strong { font-size: 26px; }
+    .bar-name { font-size: 16px; }
+    .slider-top { font-size: 17px; }
+    .slider-value { font-size: 20px; }
+    .bar-row { grid-template-columns: 8.25rem minmax(0, 1fr); }
+    .money-chart h2 { font-size: 24px; }
+    .legend-btn { font-size: 16px; }
   }
 </style>
 </head>
@@ -241,8 +431,31 @@
       <div class="toggles">
         <button type="button" class="toggle" id="hideProblems" aria-pressed="false">Hide problem cars</button>
       </div>
+      <div class="sliders">
+        <label class="slider">
+          <span class="slider-top">Purchase price up to</span>
+          <input type="range" id="price-max" min="20500" max="64000" step="500" value="64000" aria-valuetext="$64,000" aria-label="Purchase price up to $64,000">
+          <span class="slider-value" id="price-max-value">$64,000</span>
+        </label>
+        <label class="slider">
+          <span class="slider-top">Fuel per year up to</span>
+          <input type="range" id="fuel-max" min="750" max="3000" step="50" value="3000" aria-valuetext="$3,000" aria-label="Fuel per year up to $3,000">
+          <span class="slider-value" id="fuel-max-value">$3,000</span>
+        </label>
+      </div>
     </div>
     <p class="count" id="count"></p>
+    <section class="money-chart" id="money-chart" hidden aria-labelledby="chart-title">
+      <h2 id="chart-title">Where the money goes</h2>
+      <div class="legend" id="legend" role="group" aria-label="Parts of the 7-year cost">
+        <button type="button" class="legend-btn" data-piece="depreciation" aria-pressed="false"><span class="swatch swatch-depreciation" aria-hidden="true"></span>Value lost</button>
+        <button type="button" class="legend-btn" data-piece="fuel" aria-pressed="false"><span class="swatch swatch-fuel" aria-hidden="true"></span>Fuel</button>
+        <button type="button" class="legend-btn" data-piece="maintenance" aria-pressed="false"><span class="swatch swatch-maintenance" aria-hidden="true"></span>Maintenance</button>
+        <button type="button" class="legend-btn" data-piece="insurance" aria-pressed="false"><span class="swatch swatch-insurance" aria-hidden="true"></span>Insurance</button>
+      </div>
+      <div class="bars" id="bars"></div>
+      <p class="chart-note" id="chart-note" hidden aria-live="polite"></p>
+    </section>
     <div class="list" id="list"></div>
     <p class="jump"><a href="#how">How we figured this</a></p>
     <section class="how" id="how">
@@ -852,6 +1065,40 @@
     "annualFuel": 781.39
   },
   {
+    "id": "modely-2026-rwd",
+    "name": "2026 Tesla Model Y",
+    "year": 2026,
+    "city": "New from Tesla",
+    "seller": "Tesla",
+    "price": 41630,
+    "miles": 0,
+    "url": "https://www.tesla.com/modely/design#overview",
+    "drivetrain": "RWD",
+    "fuelType": "electric",
+    "rows": 2,
+    "mpgCity": null,
+    "mpgHwy": null,
+    "kwhPer100": 24,
+    "kwhPer100Hwy": 26.12,
+    "fastChargePerKwh": 0.3408,
+    "depreciationClass": "model-y",
+    "maintClass": "ev",
+    "flags": [],
+    "assumptionNotes": "New rear-wheel-drive Model Y, the cheapest one Tesla sells. The $41,630 price includes the $1,390 destination fee and the $250 order fee, and it is before tax. Checked October 3, 2026, for a Kansas City delivery. EPA says 321 miles of range, 24 kilowatt-hours per 100 miles combined, and 129 MPGe on the highway. Five seats, no third row. Maintenance is a class average and is probably high. Evan's own 2023 Model Y has only needed one set of tires.",
+    "mpgCombined": null,
+    "sevenYear": {
+      "depreciation": 29189,
+      "fuel": 5345,
+      "maintenance": 8503,
+      "insurance": 12684,
+      "total": 55721,
+      "residual": 12441
+    },
+    "maintenancePerMile": 0.0812,
+    "depreciationRate": 0.1584837,
+    "annualFuel": 763.57
+  },
+  {
     "id": "sportage-merriam",
     "name": "2025 Kia Sportage Hybrid LX",
     "year": 2025,
@@ -1090,8 +1337,200 @@
     if (find(/assumed|drivetrain/i)) return { text: "Mileage assumed", level: "caution" };
     return null;
   }
+  var legendPiece = "";
+  var picked = null;
+  var slidersReady = false;
+
+  function yearlyFuel(car) {
+    return car.sevenYear.fuel / 7;
+  }
+  function stepFloor(n, step) {
+    return Math.floor((n + 1e-6) / step) * step;
+  }
+  function stepCeil(n, step) {
+    return Math.ceil((n - 1e-6) / step) * step;
+  }
+  function updateSliderLabels() {
+    var priceInput = document.getElementById("price-max");
+    var fuelInput = document.getElementById("fuel-max");
+    var priceText = money(priceInput.value);
+    var fuelText = money(fuelInput.value);
+    document.getElementById("price-max-value").textContent = priceText;
+    document.getElementById("fuel-max-value").textContent = fuelText;
+    priceInput.setAttribute("aria-valuetext", priceText);
+    fuelInput.setAttribute("aria-valuetext", fuelText);
+    priceInput.setAttribute("aria-label", "Purchase price up to " + priceText);
+    fuelInput.setAttribute("aria-label", "Fuel per year up to " + fuelText);
+  }
+  function setupSliders() {
+    var minPrice = Infinity;
+    var maxPrice = -Infinity;
+    var minFuel = Infinity;
+    var maxFuel = -Infinity;
+    cars.forEach(function (car) {
+      if (car.price < minPrice) minPrice = car.price;
+      if (car.price > maxPrice) maxPrice = car.price;
+      var y = yearlyFuel(car);
+      if (y < minFuel) minFuel = y;
+      if (y > maxFuel) maxFuel = y;
+    });
+    var pMin = stepFloor(minPrice, 500);
+    var pMax = stepCeil(maxPrice, 500);
+    var fMin = stepFloor(minFuel, 50);
+    var fMax = stepCeil(maxFuel, 50);
+    if (pMax <= pMin) pMax = pMin + 500;
+    if (fMax <= fMin) fMax = fMin + 50;
+    var priceInput = document.getElementById("price-max");
+    var fuelInput = document.getElementById("fuel-max");
+    var priceAtMax = slidersReady && Number(priceInput.value) >= Number(priceInput.max);
+    var fuelAtMax = slidersReady && Number(fuelInput.value) >= Number(fuelInput.max);
+    priceInput.min = String(pMin);
+    priceInput.max = String(pMax);
+    priceInput.step = "500";
+    fuelInput.min = String(fMin);
+    fuelInput.max = String(fMax);
+    fuelInput.step = "50";
+    if (!slidersReady || priceAtMax) priceInput.value = String(pMax);
+    if (!slidersReady || fuelAtMax) fuelInput.value = String(fMax);
+    slidersReady = true;
+    updateSliderLabels();
+  }
+  function modelOf(car) {
+    var n = car.name;
+    if (n.indexOf("Model Y L") !== -1) return "Model Y L";
+    if (n.indexOf("Model Y") !== -1) return "Model Y";
+    if (n.indexOf("Model X") !== -1) return "Model X";
+    if (n.indexOf("Santa Fe") !== -1) return "Santa Fe";
+    if (n.indexOf("Sportage") !== -1) return "Sportage";
+    if (n.indexOf("Telluride") !== -1) return "Telluride";
+    if (n.indexOf("Explorer") !== -1) return "Explorer";
+    if (n.indexOf("EV9") !== -1) return "EV9";
+    return String(n).replace(/^\d{4}\s+/, "");
+  }
+  function cityShort(car) {
+    return String(car.city || "").split(",")[0];
+  }
+  function talkName(car, shown) {
+    var model = modelOf(car);
+    var city = cityShort(car);
+    var same = 0;
+    for (var i = 0; i < shown.length; i++) {
+      if (modelOf(shown[i]) === model && cityShort(shown[i]) === city) same++;
+    }
+    if (same > 1) return String(car.city || "") + " " + model;
+    return city + " " + model;
+  }
+  function chartLabels(shown) {
+    var narrow = window.matchMedia("(max-width: 390px)").matches;
+    function labelFor(car, mode) {
+      var model = modelOf(car);
+      if (mode === "short") return car.year + " " + model;
+      if (mode === "city") return car.year + " " + model + ", " + cityShort(car);
+      return car.year + " " + model + ", " + car.city;
+    }
+    var mode = narrow ? "short" : "city";
+    var labels = [];
+    for (var i = 0; i < shown.length; i++) labels.push(labelFor(shown[i], mode));
+    function counts(arr) {
+      var c = {};
+      for (var i = 0; i < arr.length; i++) c[arr[i]] = (c[arr[i]] || 0) + 1;
+      return c;
+    }
+    var c1 = counts(labels);
+    var next = narrow ? "city" : "place";
+    for (var j = 0; j < shown.length; j++) {
+      if (c1[labels[j]] > 1) labels[j] = labelFor(shown[j], next);
+    }
+    var c2 = counts(labels);
+    for (var k = 0; k < shown.length; k++) {
+      if (c2[labels[k]] > 1) labels[k] = labelFor(shown[k], "place");
+    }
+    return labels;
+  }
+  function syncStickyOffset() {
+    var tools = document.querySelector(".tools");
+    if (!tools) return;
+    document.documentElement.style.setProperty("--sticky-offset", (tools.offsetHeight + 10) + "px");
+  }
+  function eventEl(event) {
+    var t = event.target;
+    if (t && t.nodeType !== 1) t = t.parentElement;
+    return t;
+  }
+  function applyLegend() {
+    var chart = document.getElementById("money-chart");
+    if (!chart) return;
+    if (legendPiece) chart.setAttribute("data-highlight", legendPiece);
+    else chart.removeAttribute("data-highlight");
+    var buttons = document.querySelectorAll(".legend-btn");
+    for (var i = 0; i < buttons.length; i++) {
+      var on = buttons[i].getAttribute("data-piece") === legendPiece;
+      buttons[i].setAttribute("aria-pressed", on ? "true" : "false");
+    }
+  }
+  function showSentence(car, piece, shown) {
+    var words = { depreciation: "value lost", fuel: "fuel", maintenance: "maintenance", insurance: "insurance" };
+    var amount = car.sevenYear[piece];
+    var total = car.sevenYear.total || 0;
+    var pct = total ? Math.round(amount / total * 100) : 0;
+    var note = document.getElementById("chart-note");
+    note.hidden = false;
+    note.textContent = "On the " + talkName(car, shown) + ", " + words[piece] + " is " + money(amount) + ", about " + pct + "% of the 7-year cost.";
+  }
+  function renderChart(shown) {
+    var chart = document.getElementById("money-chart");
+    var note = document.getElementById("chart-note");
+    if (!shown.length) {
+      chart.hidden = true;
+      return;
+    }
+    chart.hidden = false;
+    var labels = chartLabels(shown);
+    var maxTotal = 0;
+    for (var i = 0; i < shown.length; i++) {
+      if (shown[i].sevenYear.total > maxTotal) maxTotal = shown[i].sevenYear.total;
+    }
+    var pieceOrder = ["depreciation", "fuel", "maintenance", "insurance"];
+    var pieceLabel = { depreciation: "Value lost", fuel: "Fuel", maintenance: "Maintenance", insurance: "Insurance" };
+    var html = "";
+    for (var c = 0; c < shown.length; c++) {
+      var car = shown[c];
+      var s = car.sevenYear;
+      var width = maxTotal ? (s.total / maxTotal * 100) : 100;
+      var segs = "";
+      for (var p = 0; p < pieceOrder.length; p++) {
+        var piece = pieceOrder[p];
+        var amount = s[piece];
+        if (!amount) continue;
+        var pct = s.total ? Math.round(amount / s.total * 100) : 0;
+        var isOn = picked && picked.id === car.id && picked.piece === piece;
+        segs += '<button type="button" class="seg seg-' + piece + (isOn ? " is-picked" : "") + '" style="flex:' + amount + " " + amount + ' 0" data-id="' + esc(car.id) + '" data-piece="' + piece + '" aria-pressed="' + (isOn ? "true" : "false") + '" aria-label="' + esc(car.name + ", " + pieceLabel[piece] + " " + money(amount) + ", about " + pct + "% of the 7-year cost") + '"></button>';
+      }
+      html += '<div class="bar-row"><button type="button" class="bar-name" data-id="' + esc(car.id) + '" aria-label="' + esc("Show details for " + car.name) + '">' + esc(labels[c]) + '</button><div class="bar" style="width:' + width + '%" role="group" aria-label="' + esc(car.name + ", 7-year total " + money(s.total)) + '">' + segs + "</div></div>";
+    }
+    document.getElementById("bars").innerHTML = html;
+    applyLegend();
+    if (picked) {
+      var found = null;
+      for (var f = 0; f < shown.length; f++) if (shown[f].id === picked.id) found = shown[f];
+      if (found) showSentence(found, picked.piece, shown);
+      else {
+        picked = null;
+        note.hidden = true;
+        note.textContent = "";
+      }
+    } else {
+      note.hidden = true;
+      note.textContent = "";
+    }
+  }
+
   function matches(car) {
     if (hideProblems && isProblem(car)) return false;
+    var priceCap = Number(document.getElementById("price-max").value);
+    var fuelCap = Number(document.getElementById("fuel-max").value);
+    if (car.price > priceCap) return false;
+    if (yearlyFuel(car) > fuelCap + 0.001) return false;
     if (filter === "rows3") return car.rows === 3;
     if (filter === "hybridEv") return car.fuelType === "hybrid" || car.fuelType === "electric";
     if (filter === "under30") return car.price < 30000;
@@ -1103,6 +1542,7 @@
   }
 
   function render() {
+    syncStickyOffset();
     var shown = cars.filter(matches).slice().sort(function (a, b) {
       if (a.sevenYear.total !== b.sevenYear.total) return a.sevenYear.total - b.sevenYear.total;
       if (a.price !== b.price) return a.price - b.price;
@@ -1112,6 +1552,7 @@
     count.textContent = shown.length === 1
       ? "1 car, cheapest first"
       : shown.length + " cars, cheapest first";
+    renderChart(shown);
     var list = document.getElementById("list");
     if (!shown.length) {
       list.innerHTML = '<p class="empty">No cars match. Try another choice above.</p>';
@@ -1191,8 +1632,63 @@
     }
   });
 
+  document.getElementById("price-max").addEventListener("input", function () {
+    updateSliderLabels();
+    render();
+  });
+  document.getElementById("fuel-max").addEventListener("input", function () {
+    updateSliderLabels();
+    render();
+  });
+  document.getElementById("legend").addEventListener("click", function (event) {
+    var el = eventEl(event);
+    var btn = el && el.closest(".legend-btn");
+    if (!btn) return;
+    var piece = btn.getAttribute("data-piece");
+    legendPiece = legendPiece === piece ? "" : piece;
+    applyLegend();
+  });
+  document.getElementById("bars").addEventListener("click", function (event) {
+    var el = eventEl(event);
+    if (!el) return;
+    var nameBtn = el.closest(".bar-name");
+    if (nameBtn) {
+      var id = nameBtn.getAttribute("data-id");
+      openId = id;
+      render();
+      var card = document.getElementById("car-" + id);
+      if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    var seg = el.closest(".seg");
+    if (!seg) return;
+    picked = { id: seg.getAttribute("data-id"), piece: seg.getAttribute("data-piece") };
+    var shownNow = cars.filter(matches);
+    var car = null;
+    for (var i = 0; i < shownNow.length; i++) if (shownNow[i].id === picked.id) car = shownNow[i];
+    if (!car) return;
+    showSentence(car, picked.piece, shownNow);
+    var note = document.getElementById("chart-note");
+    if (note && note.scrollIntoView) note.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    var segs = document.querySelectorAll("#bars .seg");
+    for (var s = 0; s < segs.length; s++) {
+      var on = segs[s].getAttribute("data-id") === picked.id && segs[s].getAttribute("data-piece") === picked.piece;
+      segs[s].classList.toggle("is-picked", on);
+      segs[s].setAttribute("aria-pressed", on ? "true" : "false");
+    }
+  });
+  var narrowMedia = window.matchMedia("(max-width: 390px)");
+  function onNarrowChange() { render(); }
+  if (narrowMedia.addEventListener) narrowMedia.addEventListener("change", onNarrowChange);
+  else if (narrowMedia.addListener) narrowMedia.addListener(onNarrowChange);
+  window.addEventListener("resize", syncStickyOffset);
+  if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+    document.fonts.ready.then(function () { syncStickyOffset(); });
+  }
+
   function start(data) {
     if (Array.isArray(data) && data.length && data[0].sevenYear) cars = data;
+    setupSliders();
     render();
   }
   start(embedded);
@@ -1202,6 +1698,6 @@
     .catch(function () {});
 })();
 </script>
-<noscript><div class="wrap" style="padding:18px"><p>JavaScript is off, so the filters will not work. Here is the same ranking, cheapest first.</p><ol><li><strong>1. 2025 Kia Sportage Hybrid LX FWD</strong>, Edmond, OK. Price $26,000. 18,103 miles. 7-year total $44,114. 2-row hybrid. <a href="https://kalidykia.com/for-sale/certified-kia-sportage-hybrid-lx-edmond-ok/2025-kia-sportage-hybrid-lx-kndpu3dg8s7185226">Listing</a></li><li><strong>2. 2025 Kia Sportage Hybrid LX</strong>, Merriam, KS. Price $26,998. 14,697 miles. 7-year total $45,937. 2-row hybrid. Drivetrain not confirmed. 38 city / 38 highway is assumed.. <a href="https://www.cars.com/vehicledetail/5042bd1c-543f-4dcf-9090-6d70a4ad2fbf/">Listing</a></li><li><strong>3. 2025 Kia Sportage Hybrid LX AWD</strong>, Topeka, KS. Price $27,499. 22,649 miles. 7-year total $46,166. 2-row hybrid. <a href="https://www.briggscdjroffortscott.com/used-Fort+Scott-2025-Kia-Sportage+Hybrid-LX-KNDPUCDG9S7217925">Listing</a></li><li><strong>4. 2017 Tesla Model X 75D</strong>, Overland Park, KS. Price $24,544. 71,242 miles. 7-year total $46,886. 3-row electric. Battery warranty has expired. The price looks low because of that.. <a href="https://www.cars.com/vehicledetail/3510cecf-d929-497f-8c5c-9fe02fa08da4/">Listing</a></li><li><strong>5. 2019 Tesla Model X Long Range</strong>, Joplin, MO. Price $32,243. 72,093 miles. 7-year total $51,858. 3-row electric. <a href="https://www.cars.com/vehicledetail/9cba6bea-2cf7-40e0-9bcc-18ed1688eb33/">Listing</a></li><li><strong>6. 2023 Tesla Model Y Performance</strong>, Kansas City, KS. Price $34,498. 39,010 miles. 7-year total $51,978. 2-row electric. <a href="https://www.cars.com/vehicledetail/59004509-b623-408b-9b34-a4b77ec2f00f/">Listing</a></li><li><strong>7. 2020 Ford Explorer</strong>, Independence, MO. Price $20,895. 52,090 miles. 7-year total $53,901. 3-row gas. <a href="https://www.cars.com/vehicledetail/e6ea5e05-219d-4151-bfa3-3970da6d1934/">Listing</a></li><li><strong>8. 2020 Tesla Model X Long Range</strong>, Kansas City, MO. Price $35,998. 60,879 miles. 7-year total $54,615. 3-row electric. <a href="https://www.cars.com/vehicledetail/030167c9-a2f8-496c-9e77-de78404537ee/">Listing</a></li><li><strong>9. 2022 Tesla Model X</strong>, Bentonville, AR. Price $37,329. 137,506 miles. 7-year total $55,834. 3-row electric. Skip. 137,506 miles is too many.. <a href="https://www.cars.com/vehicledetail/a27aad7f-4d7e-4594-87dc-2f1019981586/">Listing</a></li><li><strong>10. 2023 Ford Explorer Limited</strong>, Gladstone, MO. Price $28,695. 34,048 miles. 7-year total $57,509. 3-row gas. <a href="https://www.cars.com/vehicledetail/898540b5-54ec-41a6-9708-af3c6e3bc19d/">Listing</a></li><li><strong>11. 2023 Ford Explorer XLT</strong>, Springfield, MO. Price $29,998. 20,106 miles. 7-year total $58,246. 3-row gas. <a href="https://www.cars.com/vehicledetail/52cb9d43-a0a7-45eb-8a1c-8b1e73a6ba90/">Listing</a></li><li><strong>12. 2021 Tesla Model X Long Range</strong>, Bentonville, AR. Price $40,959. 50,933 miles. 7-year total $58,258. 3-row electric. <a href="https://www.cars.com/vehicledetail/2ad85a5a-8e87-464c-a8f8-d2e30f27654a/">Listing</a></li><li><strong>13. 2024 Kia EV9 Wind AWD</strong>, Kansas City, KS. Price $38,290. 22,222 miles. 7-year total $58,663. 3-row electric. Do not buy. The listing reports a title problem.. <a href="https://www.cars.com/vehicledetail/186a0e1f-2474-489e-b612-9ab83c292786/">Listing</a></li><li><strong>14. 2023 Ford Explorer ST</strong>, Merriam, KS. Price $25,643. 101,941 miles. 7-year total $58,713. 3-row gas. Over 100,000 miles.. <a href="https://www.cars.com/vehicledetail/785cd8bb-ebbd-4c5f-862a-c0977bae45cd/">Listing</a></li><li><strong>15. 2020 Kia Telluride SX</strong>, Omaha, NE. Price $27,998. 67,310 miles. 7-year total $59,520. 3-row gas. <a href="https://www.cars.com/vehicledetail/6e45f8df-349c-4095-83b0-bbeb805df5ab/">Listing</a></li><li><strong>16. 2024 Kia EV9 Wind AWD</strong>, Kansas City, MO. Price $41,160. 21,593 miles. 7-year total $60,658. 3-row electric. <a href="https://www.cars.com/vehicledetail/e62a808f-03df-4fa5-ac9e-4becd31feeb0/">Listing</a></li><li><strong>17. 2024 Kia EV9 Land AWD</strong>, Lee's Summit, MO. Price $41,598. 21,837 miles. 7-year total $60,963. 3-row electric. Accidents reported.. <a href="https://www.cars.com/vehicledetail/620ea27e-96c1-40c7-a64b-e50ef326724f/">Listing</a></li><li><strong>18. 2022 Kia Telluride SX</strong>, Hiawatha, IA. Price $30,995. 38,280 miles. 7-year total $61,216. 3-row gas. <a href="https://www.cars.com/vehicledetail/86f0f81f-3686-44ff-b3e5-623fe18a739b/">Listing</a></li><li><strong>19. 2025 Hyundai Santa Fe Calligraphy</strong>, Topeka, KS. Price $36,160. 21,648 miles. 7-year total $61,886. 3-row gas. <a href="https://www.cars.com/vehicledetail/550dd909-da39-421a-938a-4ad97600377d/">Listing</a></li><li><strong>20. 2025 Kia Telluride S</strong>, Chesterfield, MO. Price $31,618. 28,961 miles. 7-year total $62,534. 3-row gas. <a href="https://www.cars.com/vehicledetail/e320a38d-cbcf-4981-8f40-645c9fa76bd2/">Listing</a></li><li><strong>21. 2026 Ford Explorer Active</strong>, Gower, MO. Price $41,198. 793 miles. 7-year total $65,390. 3-row gas. Ford took this car back and resold it.. <a href="https://www.cars.com/vehicledetail/bbf1ae5c-8220-43d5-bd85-9505712612ad/">Listing</a></li><li><strong>22. 2026 Tesla Model Y L Premium</strong>, New from Tesla. Price $63,630. 0 miles. 7-year total $71,272. 3-row electric. <a href="https://www.tesla.com/modely">Listing</a></li></ol></div></noscript>
+<noscript><div class="wrap" style="padding:18px"><p>JavaScript is off, so the filters will not work. Here is the same ranking, cheapest first.</p><ol><li><strong>1. 2025 Kia Sportage Hybrid LX FWD</strong>, Edmond, OK. Price $26,000. 18,103 miles. 7-year total $44,114. 2-row hybrid. <a href="https://kalidykia.com/for-sale/certified-kia-sportage-hybrid-lx-edmond-ok/2025-kia-sportage-hybrid-lx-kndpu3dg8s7185226">Listing</a></li><li><strong>2. 2025 Kia Sportage Hybrid LX</strong>, Merriam, KS. Price $26,998. 14,697 miles. 7-year total $45,937. 2-row hybrid. Drivetrain not confirmed. 38 city / 38 highway is assumed.. <a href="https://www.cars.com/vehicledetail/5042bd1c-543f-4dcf-9090-6d70a4ad2fbf/">Listing</a></li><li><strong>3. 2025 Kia Sportage Hybrid LX AWD</strong>, Topeka, KS. Price $27,499. 22,649 miles. 7-year total $46,166. 2-row hybrid. <a href="https://www.briggscdjroffortscott.com/used-Fort+Scott-2025-Kia-Sportage+Hybrid-LX-KNDPUCDG9S7217925">Listing</a></li><li><strong>4. 2017 Tesla Model X 75D</strong>, Overland Park, KS. Price $24,544. 71,242 miles. 7-year total $46,886. 3-row electric. Battery warranty has expired. The price looks low because of that.. <a href="https://www.cars.com/vehicledetail/3510cecf-d929-497f-8c5c-9fe02fa08da4/">Listing</a></li><li><strong>5. 2019 Tesla Model X Long Range</strong>, Joplin, MO. Price $32,243. 72,093 miles. 7-year total $51,858. 3-row electric. <a href="https://www.cars.com/vehicledetail/9cba6bea-2cf7-40e0-9bcc-18ed1688eb33/">Listing</a></li><li><strong>6. 2023 Tesla Model Y Performance</strong>, Kansas City, KS. Price $34,498. 39,010 miles. 7-year total $51,978. 2-row electric. <a href="https://www.cars.com/vehicledetail/59004509-b623-408b-9b34-a4b77ec2f00f/">Listing</a></li><li><strong>7. 2020 Ford Explorer</strong>, Independence, MO. Price $20,895. 52,090 miles. 7-year total $53,901. 3-row gas. <a href="https://www.cars.com/vehicledetail/e6ea5e05-219d-4151-bfa3-3970da6d1934/">Listing</a></li><li><strong>8. 2020 Tesla Model X Long Range</strong>, Kansas City, MO. Price $35,998. 60,879 miles. 7-year total $54,615. 3-row electric. <a href="https://www.cars.com/vehicledetail/030167c9-a2f8-496c-9e77-de78404537ee/">Listing</a></li><li><strong>9. 2026 Tesla Model Y</strong>, New from Tesla. Price $41,630. 0 miles. 7-year total $55,721. 2-row electric. <a href="https://www.tesla.com/modely/design#overview">Listing</a></li><li><strong>10. 2022 Tesla Model X</strong>, Bentonville, AR. Price $37,329. 137,506 miles. 7-year total $55,834. 3-row electric. Skip. 137,506 miles is too many.. <a href="https://www.cars.com/vehicledetail/a27aad7f-4d7e-4594-87dc-2f1019981586/">Listing</a></li><li><strong>11. 2023 Ford Explorer Limited</strong>, Gladstone, MO. Price $28,695. 34,048 miles. 7-year total $57,509. 3-row gas. <a href="https://www.cars.com/vehicledetail/898540b5-54ec-41a6-9708-af3c6e3bc19d/">Listing</a></li><li><strong>12. 2023 Ford Explorer XLT</strong>, Springfield, MO. Price $29,998. 20,106 miles. 7-year total $58,246. 3-row gas. <a href="https://www.cars.com/vehicledetail/52cb9d43-a0a7-45eb-8a1c-8b1e73a6ba90/">Listing</a></li><li><strong>13. 2021 Tesla Model X Long Range</strong>, Bentonville, AR. Price $40,959. 50,933 miles. 7-year total $58,258. 3-row electric. <a href="https://www.cars.com/vehicledetail/2ad85a5a-8e87-464c-a8f8-d2e30f27654a/">Listing</a></li><li><strong>14. 2024 Kia EV9 Wind AWD</strong>, Kansas City, KS. Price $38,290. 22,222 miles. 7-year total $58,663. 3-row electric. Do not buy. The listing reports a title problem.. <a href="https://www.cars.com/vehicledetail/186a0e1f-2474-489e-b612-9ab83c292786/">Listing</a></li><li><strong>15. 2023 Ford Explorer ST</strong>, Merriam, KS. Price $25,643. 101,941 miles. 7-year total $58,713. 3-row gas. Over 100,000 miles.. <a href="https://www.cars.com/vehicledetail/785cd8bb-ebbd-4c5f-862a-c0977bae45cd/">Listing</a></li><li><strong>16. 2020 Kia Telluride SX</strong>, Omaha, NE. Price $27,998. 67,310 miles. 7-year total $59,520. 3-row gas. <a href="https://www.cars.com/vehicledetail/6e45f8df-349c-4095-83b0-bbeb805df5ab/">Listing</a></li><li><strong>17. 2024 Kia EV9 Wind AWD</strong>, Kansas City, MO. Price $41,160. 21,593 miles. 7-year total $60,658. 3-row electric. <a href="https://www.cars.com/vehicledetail/e62a808f-03df-4fa5-ac9e-4becd31feeb0/">Listing</a></li><li><strong>18. 2024 Kia EV9 Land AWD</strong>, Lee's Summit, MO. Price $41,598. 21,837 miles. 7-year total $60,963. 3-row electric. Accidents reported.. <a href="https://www.cars.com/vehicledetail/620ea27e-96c1-40c7-a64b-e50ef326724f/">Listing</a></li><li><strong>19. 2022 Kia Telluride SX</strong>, Hiawatha, IA. Price $30,995. 38,280 miles. 7-year total $61,216. 3-row gas. <a href="https://www.cars.com/vehicledetail/86f0f81f-3686-44ff-b3e5-623fe18a739b/">Listing</a></li><li><strong>20. 2025 Hyundai Santa Fe Calligraphy</strong>, Topeka, KS. Price $36,160. 21,648 miles. 7-year total $61,886. 3-row gas. <a href="https://www.cars.com/vehicledetail/550dd909-da39-421a-938a-4ad97600377d/">Listing</a></li><li><strong>21. 2025 Kia Telluride S</strong>, Chesterfield, MO. Price $31,618. 28,961 miles. 7-year total $62,534. 3-row gas. <a href="https://www.cars.com/vehicledetail/e320a38d-cbcf-4981-8f40-645c9fa76bd2/">Listing</a></li><li><strong>22. 2026 Ford Explorer Active</strong>, Gower, MO. Price $41,198. 793 miles. 7-year total $65,390. 3-row gas. Ford took this car back and resold it.. <a href="https://www.cars.com/vehicledetail/bbf1ae5c-8220-43d5-bd85-9505712612ad/">Listing</a></li><li><strong>23. 2026 Tesla Model Y L Premium</strong>, New from Tesla. Price $63,630. 0 miles. 7-year total $71,272. 3-row electric. <a href="https://www.tesla.com/modely">Listing</a></li></ol></div></noscript>
 </body>
 </html>

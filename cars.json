@@ -26,8 +26,8 @@
       "fuel": 19925,
       "maintenance": 11068,
       "insurance": 12684,
-      "total": 59520,
-      "residual": 12155
+      "residual": 12155,
+      "total": 59520
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
@@ -63,8 +63,8 @@
       "fuel": 20450,
       "maintenance": 11068,
       "insurance": 12684,
-      "total": 58713,
-      "residual": 11132
+      "residual": 11132,
+      "total": 58713
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
@@ -99,8 +99,8 @@
       "fuel": 18325,
       "maintenance": 11068,
       "insurance": 12684,
-      "total": 65390,
-      "residual": 17885
+      "residual": 17885,
+      "total": 65390
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
@@ -133,8 +133,8 @@
       "fuel": 17519,
       "maintenance": 11068,
       "insurance": 12684,
-      "total": 57509,
-      "residual": 12457
+      "residual": 12457,
+      "total": 57509
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
@@ -146,7 +146,7 @@
     "year": 2020,
     "city": "Independence, MO",
     "seller": "DriveTime Independence",
-    "price": 20895,
+    "price": 20695,
     "miles": 52090,
     "url": "https://www.cars.com/vehicledetail/e6ea5e05-219d-4151-bfa3-3970da6d1934/",
     "drivetrain": "4WD",
@@ -163,12 +163,12 @@
     "assumptionNotes": "More than one owner, clean title. 2.3 liter engine. EPA is 20 city and 27 highway.",
     "mpgCombined": 22.6,
     "sevenYear": {
-      "depreciation": 11824,
+      "depreciation": 11711,
       "fuel": 18325,
       "maintenance": 11068,
       "insurance": 12684,
-      "total": 53901,
-      "residual": 9071
+      "residual": 8984,
+      "total": 53788
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
@@ -201,8 +201,8 @@
       "fuel": 6602,
       "maintenance": 8503,
       "insurance": 12684,
-      "total": 51978,
-      "residual": 10309
+      "residual": 10309,
+      "total": 51978
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1584837,
@@ -227,7 +227,9 @@
     "fastChargePerKwh": null,
     "depreciationClass": "hybrid",
     "maintClass": "hybrid",
-    "flags": [],
+    "flags": [
+      "Sold or no longer listed."
+    ],
     "assumptionNotes": "Kia certified, one owner, clean title. The listing confirms all-wheel drive and 38 city / 38 highway. Price is the dealer's $27,499 figure. The page says that includes a $399 paperwork fee, so the fee is not added again. The ad is on the Briggs Fort Scott website, and it also lists the Briggs Kia store in Topeka.",
     "mpgCombined": 38.0,
     "sevenYear": {
@@ -240,7 +242,8 @@
     },
     "maintenancePerMile": 0.0909,
     "depreciationRate": 0.08368135,
-    "annualFuel": 1625.81
+    "annualFuel": 1625.81,
+    "sold": true
   },
   {
     "id": "santafe-2025",
@@ -269,8 +272,8 @@
       "fuel": 17672,
       "maintenance": 11068,
       "insurance": 12684,
-      "total": 61886,
-      "residual": 15698
+      "residual": 15698,
+      "total": 61886
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
@@ -305,8 +308,8 @@
       "fuel": 10857,
       "maintenance": 8503,
       "insurance": 12684,
-      "total": 58663,
-      "residual": 11671
+      "residual": 11671,
+      "total": 58663
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.15610435,
@@ -318,7 +321,7 @@
     "year": 2024,
     "city": "Kansas City, MO",
     "seller": "Wood Nissan",
-    "price": 41160,
+    "price": 40594,
     "miles": 21593,
     "url": "https://www.cars.com/vehicledetail/e62a808f-03df-4fa5-ac9e-4becd31feeb0/",
     "drivetrain": "AWD",
@@ -335,12 +338,12 @@
     "assumptionNotes": "One owner, clean title. About 280 miles of range.",
     "mpgCombined": null,
     "sevenYear": {
-      "depreciation": 28614,
+      "depreciation": 28221,
       "fuel": 10857,
       "maintenance": 8503,
       "insurance": 12684,
-      "total": 60658,
-      "residual": 12546
+      "residual": 12373,
+      "total": 60265
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.15610435,
@@ -375,8 +378,8 @@
       "fuel": 10857,
       "maintenance": 8503,
       "insurance": 12684,
-      "total": 60963,
-      "residual": 12679
+      "residual": 12679,
+      "total": 60963
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.15610435,
@@ -411,8 +414,8 @@
       "fuel": 7676,
       "maintenance": 8503,
       "insurance": 12684,
-      "total": 46886,
-      "residual": 6521
+      "residual": 6521,
+      "total": 46886
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1725032,
@@ -445,8 +448,8 @@
       "fuel": 6994,
       "maintenance": 8503,
       "insurance": 12684,
-      "total": 54615,
-      "residual": 9564
+      "residual": 9564,
+      "total": 54615
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1725032,
@@ -479,8 +482,8 @@
       "fuel": 6994,
       "maintenance": 8503,
       "insurance": 12684,
-      "total": 58258,
-      "residual": 10882
+      "residual": 10882,
+      "total": 58258
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1725032,
@@ -515,8 +518,8 @@
       "fuel": 7236,
       "maintenance": 8503,
       "insurance": 12684,
-      "total": 55834,
-      "residual": 9918
+      "residual": 9918,
+      "total": 55834
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1725032,
@@ -549,8 +552,8 @@
       "fuel": 6994,
       "maintenance": 8503,
       "insurance": 12684,
-      "total": 51858,
-      "residual": 8566
+      "residual": 8566,
+      "total": 51858
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1725032,
@@ -583,8 +586,8 @@
       "fuel": 5470,
       "maintenance": 8503,
       "insurance": 12684,
-      "total": 71272,
-      "residual": 19015
+      "residual": 19015,
+      "total": 71272
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1584837,
@@ -619,8 +622,8 @@
       "fuel": 11381,
       "maintenance": 9518,
       "insurance": 12684,
-      "total": 45937,
-      "residual": 14644
+      "residual": 14644,
+      "total": 45937
     },
     "maintenancePerMile": 0.0909,
     "depreciationRate": 0.08368135,
@@ -656,8 +659,8 @@
         "fuel": 10015,
         "maintenance": 9518,
         "insurance": 12684,
-        "total": 44982,
-        "residual": 15130
+        "residual": 15130,
+        "total": 44982
       }
     },
     "mpgCombined": 42.9,
@@ -666,8 +669,8 @@
       "fuel": 10015,
       "maintenance": 9518,
       "insurance": 12684,
-      "total": 44114,
-      "residual": 14103
+      "residual": 14103,
+      "total": 44114
     },
     "maintenancePerMile": 0.0909,
     "depreciationRate": 0.08368135,
@@ -700,8 +703,8 @@
       "fuel": 17519,
       "maintenance": 11068,
       "insurance": 12684,
-      "total": 58246,
-      "residual": 13023
+      "residual": 13023,
+      "total": 58246
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
@@ -734,8 +737,8 @@
       "fuel": 19925,
       "maintenance": 11068,
       "insurance": 12684,
-      "total": 61216,
-      "residual": 13456
+      "residual": 13456,
+      "total": 61216
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
@@ -747,7 +750,7 @@
     "year": 2025,
     "city": "Chesterfield, MO",
     "seller": "EchoPark Chesterfield",
-    "price": 31618,
+    "price": 31318,
     "miles": 28961,
     "url": "https://www.cars.com/vehicledetail/e320a38d-cbcf-4981-8f40-645c9fa76bd2/",
     "drivetrain": "AWD",
@@ -764,12 +767,12 @@
     "assumptionNotes": "Clean title. EPA for every 2025 Telluride with all-wheel drive is 18 city and 23 highway (fueleconomy.gov). 20 city and 26 highway is the front-wheel-drive Telluride, so it is not used here.",
     "mpgCombined": 20.0,
     "sevenYear": {
-      "depreciation": 17892,
+      "depreciation": 17722,
       "fuel": 20890,
       "maintenance": 11068,
       "insurance": 12684,
-      "total": 62534,
-      "residual": 13726
+      "residual": 13596,
+      "total": 62364
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
@@ -802,8 +805,8 @@
       "fuel": 5345,
       "maintenance": 8503,
       "insurance": 12684,
-      "total": 55721,
-      "residual": 12441
+      "residual": 12441,
+      "total": 55721
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1584837,

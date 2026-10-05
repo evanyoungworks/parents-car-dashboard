@@ -405,7 +405,8 @@
     "depreciationClass": "model-x",
     "maintClass": "ev",
     "flags": [
-      "Battery warranty has expired. The price looks low because of that."
+      "Battery warranty has expired. The price looks low because of that.",
+      "Sold or no longer listed."
     ],
     "assumptionNotes": "More than one owner, clean title. About 237 miles of range. The battery warranty is already over, so a big repair would be out of pocket.",
     "mpgCombined": null,
@@ -419,7 +420,8 @@
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1725032,
-    "annualFuel": 1096.52
+    "annualFuel": 1096.52,
+    "sold": true
   },
   {
     "id": "modelx-2020",
@@ -613,7 +615,8 @@
     "depreciationClass": "hybrid",
     "maintClass": "hybrid",
     "flags": [
-      "Drivetrain not confirmed. 38 city / 38 highway is assumed."
+      "Drivetrain not confirmed. 38 city / 38 highway is assumed.",
+      "Sold or no longer listed."
     ],
     "assumptionNotes": "Assumed all-wheel drive and 38 city / 38 highway, the same as the other Sportage Hybrid LX with all-wheel drive. Cars.com said rear-wheel drive, which is probably wrong. That mpg is an assumption, not a number from this listing.",
     "mpgCombined": 38.0,
@@ -627,7 +630,8 @@
     },
     "maintenancePerMile": 0.0909,
     "depreciationRate": 0.08368135,
-    "annualFuel": 1625.81
+    "annualFuel": 1625.81,
+    "sold": true
   },
   {
     "id": "sportage-edmond",

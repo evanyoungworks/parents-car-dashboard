@@ -31,7 +31,8 @@
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
-    "annualFuel": 2846.36
+    "annualFuel": 2846.36,
+    "sold": false
   },
   {
     "id": "explorer-st-2023",
@@ -68,7 +69,8 @@
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
-    "annualFuel": 2921.44
+    "annualFuel": 2921.44,
+    "sold": false
   },
   {
     "id": "explorer-active-2026",
@@ -104,7 +106,8 @@
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
-    "annualFuel": 2617.87
+    "annualFuel": 2617.87,
+    "sold": false
   },
   {
     "id": "explorer-limited-2023",
@@ -112,7 +115,7 @@
     "year": 2023,
     "city": "Gladstone, MO",
     "seller": "DriveTime Gladstone",
-    "price": 28695,
+    "price": 28395,
     "miles": 34048,
     "url": "https://www.cars.com/vehicledetail/898540b5-54ec-41a6-9708-af3c6e3bc19d/",
     "drivetrain": "RWD",
@@ -129,16 +132,17 @@
     "assumptionNotes": "One owner, clean title. Rear-wheel drive. EPA is 21 city and 28 highway.",
     "mpgCombined": 23.7,
     "sevenYear": {
-      "depreciation": 16238,
+      "depreciation": 16068,
       "fuel": 17519,
       "maintenance": 11068,
       "insurance": 12684,
-      "residual": 12457,
-      "total": 57509
+      "residual": 12327,
+      "total": 57339
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
-    "annualFuel": 2502.73
+    "annualFuel": 2502.73,
+    "sold": false
   },
   {
     "id": "explorer-2020",
@@ -146,7 +150,7 @@
     "year": 2020,
     "city": "Independence, MO",
     "seller": "DriveTime Independence",
-    "price": 20695,
+    "price": 20595,
     "miles": 52090,
     "url": "https://www.cars.com/vehicledetail/e6ea5e05-219d-4151-bfa3-3970da6d1934/",
     "drivetrain": "4WD",
@@ -163,16 +167,17 @@
     "assumptionNotes": "More than one owner, clean title. 2.3 liter engine. EPA is 20 city and 27 highway.",
     "mpgCombined": 22.6,
     "sevenYear": {
-      "depreciation": 11711,
+      "depreciation": 11654,
       "fuel": 18325,
       "maintenance": 11068,
       "insurance": 12684,
-      "residual": 8984,
-      "total": 53788
+      "residual": 8941,
+      "total": 53731
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
-    "annualFuel": 2617.87
+    "annualFuel": 2617.87,
+    "sold": false
   },
   {
     "id": "modely-2023",
@@ -206,7 +211,8 @@
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1584837,
-    "annualFuel": 943.14
+    "annualFuel": 943.14,
+    "sold": false
   },
   {
     "id": "sportage-topeka",
@@ -251,7 +257,7 @@
     "year": 2025,
     "city": "Topeka, KS",
     "seller": "BMW VW of Topeka",
-    "price": 36160,
+    "price": 35535,
     "miles": 21648,
     "url": "https://www.cars.com/vehicledetail/550dd909-da39-421a-938a-4ad97600377d/",
     "drivetrain": "FWD",
@@ -268,16 +274,17 @@
     "assumptionNotes": "One owner, clean title. Front-wheel drive. The listing showed 20 to 29 mpg, so that is what this uses.",
     "mpgCombined": 23.2,
     "sevenYear": {
-      "depreciation": 20462,
+      "depreciation": 20108,
       "fuel": 17672,
       "maintenance": 11068,
       "insurance": 12684,
-      "residual": 15698,
-      "total": 61886
+      "residual": 15427,
+      "total": 61532
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
-    "annualFuel": 2524.53
+    "annualFuel": 2524.53,
+    "sold": false
   },
   {
     "id": "ev9-title",
@@ -313,7 +320,8 @@
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.15610435,
-    "annualFuel": 1551.04
+    "annualFuel": 1551.04,
+    "sold": false
   },
   {
     "id": "ev9-wind",
@@ -347,7 +355,8 @@
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.15610435,
-    "annualFuel": 1551.04
+    "annualFuel": 1551.04,
+    "sold": false
   },
   {
     "id": "ev9-land",
@@ -383,7 +392,8 @@
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.15610435,
-    "annualFuel": 1551.04
+    "annualFuel": 1551.04,
+    "sold": false
   },
   {
     "id": "modelx-2017",
@@ -430,7 +440,7 @@
     "city": "Kansas City, MO",
     "seller": "Wood Nissan",
     "price": 35998,
-    "miles": 60879,
+    "miles": 60883,
     "url": "https://www.cars.com/vehicledetail/030167c9-a2f8-496c-9e77-de78404537ee/",
     "drivetrain": "AWD",
     "fuelType": "electric",
@@ -455,7 +465,8 @@
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1725032,
-    "annualFuel": 999.12
+    "annualFuel": 999.12,
+    "sold": false
   },
   {
     "id": "modelx-2021",
@@ -489,7 +500,8 @@
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1725032,
-    "annualFuel": 999.12
+    "annualFuel": 999.12,
+    "sold": false
   },
   {
     "id": "modelx-2022",
@@ -525,7 +537,8 @@
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1725032,
-    "annualFuel": 1033.74
+    "annualFuel": 1033.74,
+    "sold": false
   },
   {
     "id": "modelx-2019",
@@ -559,7 +572,8 @@
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1725032,
-    "annualFuel": 999.12
+    "annualFuel": 999.12,
+    "sold": false
   },
   {
     "id": "modely-l-2026",
@@ -593,7 +607,8 @@
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1584837,
-    "annualFuel": 781.39
+    "annualFuel": 781.39,
+    "sold": false
   },
   {
     "id": "sportage-merriam",
@@ -639,7 +654,7 @@
     "year": 2025,
     "city": "Edmond, OK",
     "seller": "Kalidy Kia",
-    "price": 26000,
+    "price": 25750,
     "miles": 18103,
     "url": "https://kalidykia.com/for-sale/certified-kia-sportage-hybrid-lx-edmond-ok/2025-kia-sportage-hybrid-lx-kndpu3dg8s7185226",
     "drivetrain": "FWD",
@@ -655,30 +670,31 @@
     "flags": [],
     "assumptionNotes": "Front-wheel drive. EPA is 42 city and 44 highway. The advertised price is $26,000. A $1,895 Friends for Life package is not included in that price or in the main total.",
     "packageAlt": {
-      "label": "If you also buy the $1,895 Friends for Life package, the price is $27,895 and the 7-year total is $44,982.",
-      "price": 27895,
-      "sevenYearTotal": 44982,
+      "label": "If you also buy the $1,895 Friends for Life package, the price is $27,645 and the 7-year total is $44,867.",
+      "price": 27645,
+      "sevenYearTotal": 44867,
       "sevenYear": {
-        "depreciation": 12765,
+        "depreciation": 12650,
         "fuel": 10015,
         "maintenance": 9518,
         "insurance": 12684,
-        "residual": 15130,
-        "total": 44982
+        "residual": 14995,
+        "total": 44867
       }
     },
     "mpgCombined": 42.9,
     "sevenYear": {
-      "depreciation": 11897,
+      "depreciation": 11783,
       "fuel": 10015,
       "maintenance": 9518,
       "insurance": 12684,
-      "residual": 14103,
-      "total": 44114
+      "residual": 13967,
+      "total": 44000
     },
     "maintenancePerMile": 0.0909,
     "depreciationRate": 0.08368135,
-    "annualFuel": 1430.75
+    "annualFuel": 1430.75,
+    "sold": false
   },
   {
     "id": "explorer-xlt-2023",
@@ -712,7 +728,8 @@
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
-    "annualFuel": 2502.73
+    "annualFuel": 2502.73,
+    "sold": false
   },
   {
     "id": "telluride-2022-hiawatha",
@@ -746,7 +763,8 @@
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
-    "annualFuel": 2846.36
+    "annualFuel": 2846.36,
+    "sold": false
   },
   {
     "id": "telluride-2025-chesterfield",
@@ -780,7 +798,8 @@
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
-    "annualFuel": 2984.31
+    "annualFuel": 2984.31,
+    "sold": false
   },
   {
     "id": "modely-2026-rwd",
@@ -814,6 +833,7 @@
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.1584837,
-    "annualFuel": 763.57
+    "annualFuel": 763.57,
+    "sold": false
   }
 ]

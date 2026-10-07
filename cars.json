@@ -40,7 +40,7 @@
     "year": 2023,
     "city": "Merriam, KS",
     "seller": "BMW MINI of Shawnee Mission",
-    "price": 25643,
+    "price": 24643,
     "miles": 101941,
     "url": "https://www.cars.com/vehicledetail/785cd8bb-ebbd-4c5f-862a-c0977bae45cd/",
     "drivetrain": "4WD",
@@ -60,12 +60,12 @@
     "assumptionNotes": "One owner, clean title. 3.0 liter engine. EPA is 18 city and 24 highway.",
     "mpgCombined": 20.3,
     "sevenYear": {
-      "depreciation": 14511,
+      "depreciation": 13945,
       "fuel": 20450,
       "maintenance": 11068,
       "insurance": 12684,
-      "residual": 11132,
-      "total": 58713
+      "residual": 10698,
+      "total": 58147
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
@@ -115,7 +115,7 @@
     "year": 2023,
     "city": "Gladstone, MO",
     "seller": "DriveTime Gladstone",
-    "price": 28395,
+    "price": 28095,
     "miles": 34048,
     "url": "https://www.cars.com/vehicledetail/898540b5-54ec-41a6-9708-af3c6e3bc19d/",
     "drivetrain": "RWD",
@@ -132,12 +132,12 @@
     "assumptionNotes": "One owner, clean title. Rear-wheel drive. EPA is 21 city and 28 highway.",
     "mpgCombined": 23.7,
     "sevenYear": {
-      "depreciation": 16068,
+      "depreciation": 15898,
       "fuel": 17519,
       "maintenance": 11068,
       "insurance": 12684,
-      "residual": 12327,
-      "total": 57339
+      "residual": 12197,
+      "total": 57169
     },
     "maintenancePerMile": 0.1057,
     "depreciationRate": 0.11237334,
@@ -364,7 +364,7 @@
     "year": 2024,
     "city": "Lee's Summit, MO",
     "seller": "Lee's Summit Subaru",
-    "price": 41598,
+    "price": 40899,
     "miles": 21837,
     "url": "https://www.cars.com/vehicledetail/620ea27e-96c1-40c7-a64b-e50ef326724f/",
     "drivetrain": "AWD",
@@ -383,12 +383,12 @@
     "assumptionNotes": "Clean title, but accidents were reported. About 304 miles of range. Electricity use is the same EPA figure as the Wind.",
     "mpgCombined": null,
     "sevenYear": {
-      "depreciation": 28919,
+      "depreciation": 28433,
       "fuel": 10857,
       "maintenance": 8503,
       "insurance": 12684,
-      "residual": 12679,
-      "total": 60963
+      "residual": 12466,
+      "total": 60477
     },
     "maintenancePerMile": 0.0812,
     "depreciationRate": 0.15610435,
